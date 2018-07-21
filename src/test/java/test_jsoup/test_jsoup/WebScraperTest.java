@@ -17,16 +17,16 @@ public class WebScraperTest extends TestCase {
 	@Test
 	public void testGetCurrentPrice() throws NumberFormatException, IOException {
 		System.out.println("Stock Price for " + tickerSymbol +" Is: "+ webScraper.getCurrentPrice());
-		float intValue;
-		intValue = Float.parseFloat(webScraper.getCurrentPrice());
-		assertNotNull(intValue);
+		float floatValue;
+		floatValue = Float.parseFloat(webScraper.getCurrentPrice());
+		assertNotNull(floatValue);
 	}
 	
 	@Test
 	public void testGetRevenue() throws NumberFormatException, IOException {
 		//System.out.println("Revenue for " + tickerSymbol +" Is: "+ webScraper.getRevenue());
-		float intValue;
-		intValue = Float.parseFloat(webScraper.getRevenue());
-		assertNotNull(intValue);
+		float floatValue;
+		floatValue = Float.parseFloat(webScraper.getRevenue());
+		assertNotNull(floatValue);
 	}
 }

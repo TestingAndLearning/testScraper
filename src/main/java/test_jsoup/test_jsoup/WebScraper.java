@@ -25,7 +25,7 @@ public class WebScraper {
 		cashUrl = mainUrl + "/cash-flow";
 		
 		//document = Jsoup.connect(mainUrl).get();
-		System.out.println(mainUrl);
+		//System.out.println(mainUrl);
 	}
 	
 	public String getCurrentPrice() throws IOException {
@@ -37,9 +37,11 @@ public class WebScraper {
 	
 	public String getRevenue() throws IOException {
 		document = Jsoup.connect(incomeUrl).get();
-		Element stockPriceElement = document.getElementsByClass("crDataTable").get(1);
+		//Element stockPriceElement = document.getElementsByClass("crDataTable").get(0);
+		Element stockPriceElement = document.getElementsByClass("crDataTable").get(0).select("th[scope]").get(0);
 		System.out.println(stockPriceElement);
-		//String elementValue = stockPriceElement.text();
-		return "test";
+		String elementValue = stockPriceElement.text();
+		System.out.println(elementValue);
+		return elementValue;
 	}
 }

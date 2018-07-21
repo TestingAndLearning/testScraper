@@ -10,7 +10,7 @@ public class App {
 	
     public static void main( String[] args ) throws IOException
     {
-        //WebScraper webScraper = new WebScraper("MSFT");
-        //webScraper.getCurrentPrice();
+        WebScraper webScraper = new WebScraper("MSFT");
+        webScraper.getCurrentPrice();
     }
 }
