@@ -14,9 +14,9 @@ public class ND1Revenue extends NDScraperBase
 	{
 		super(tickerSymbol);
 		incomeDocument = Jsoup.connect(incomeUrl).get();
-		//Thread.sleep(scrapeDelay);
+		Thread.sleep(scrapeDelay);
 		incomeQuarterDocument = Jsoup.connect(incomeQuarterUrl).get();
-		//Thread.sleep(scrapeDelay);
+		Thread.sleep(scrapeDelay);
 	}
 
 	/** *************************** **/

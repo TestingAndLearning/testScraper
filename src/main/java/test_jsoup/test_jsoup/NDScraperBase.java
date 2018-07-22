@@ -52,7 +52,7 @@ public class NDScraperBase {
 		cashflowQuarterUrl = cashflowUrl + "/quarter";
 		
 		mainDocument = Jsoup.connect(mainUrl).get();
-		//Thread.sleep(scrapeDelay);
+		Thread.sleep(scrapeDelay);
 	}
 	
 	/** ************************ **/
