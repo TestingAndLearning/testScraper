@@ -10,7 +10,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class WebScraper {
+public class NDScraperBase {
 	
 	/** ************************** **/
 	/** Begin Initializing Scraper **/
@@ -31,7 +31,7 @@ public class WebScraper {
 	int scrapeDelay = 500; //Delay in ms between each HTTP action. 
 	Document document;
 
-	public WebScraper(String tickerSymbol) throws IOException {
+	public NDScraperBase(String tickerSymbol) throws IOException {
 		this.tickerSymbol = tickerSymbol;
 		mainUrl = "https://www.marketwatch.com/investing/stock/" + tickerSymbol;
 		

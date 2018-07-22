@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import junit.framework.TestCase;
 
-public class WebScraperTest extends TestCase {
+public class NDScraperBaseTest extends TestCase {
 	String tickerSymbol = "MSFT";
 	String mainUrl;
 	String incomeUrl;
@@ -19,10 +19,10 @@ public class WebScraperTest extends TestCase {
 	String balanceUrl;
 	String cashUrl;
 	
-	WebScraper webScraper = new WebScraper(tickerSymbol);
+	NDScraperBase webScraper = new NDScraperBase(tickerSymbol);
 	Document document; 
 	
-	public WebScraperTest() throws IOException {
+	public NDScraperBaseTest() throws IOException {
 		mainUrl = "https://www.marketwatch.com/investing/stock/" + tickerSymbol;
 		incomeUrl = mainUrl + "/financials";
 		incomeQuarterUrl = incomeUrl+"/income/quarter";
