@@ -43,20 +43,25 @@ public class WebScraperTest extends TestCase {
 	@Test
 	public void testGetRevenuePeriodHeader_firstAnnualHeader_isYear() throws NumberFormatException, IOException, InterruptedException {
 		document = Jsoup.connect(incomeUrl).get();
-		String regex = "\\d{4}";
 		String firstHeaderValue = webScraper.getRevenuePeriodHeader(document, 0);
-		 if (!firstHeaderValue.matches(regex)) {
-			 System.out.println("First Available Year For " + tickerSymbol +" Is: "+ firstHeaderValue +" and does not match the regex: " + regex);
-		 }
-		assertTrue(firstHeaderValue.matches("\\d{4}"));
+		String regex = "\\d{4}";
+		if (!firstHeaderValue.matches(regex)) {
+			System.out.println("testGetRevenuePeriodHeader_firstAnnualHeader_isYear: ");
+			System.out.println("First available year for " + tickerSymbol +" is: "+ firstHeaderValue +" and does not match the regex: " + regex);
+		}
+		assertTrue(firstHeaderValue.matches(regex));
 	}
 	
 	//Tests if the site is still following the same HTML layout. Header should be a four digit number like 2017. 
 	public void testGetRevenuePeriodHeader_lastAnnualHeader_isYears() throws NumberFormatException, IOException, InterruptedException {
 		document = Jsoup.connect(incomeUrl).get();
 		String lastHeaderValue = webScraper.getRevenuePeriodHeader(document, 4);
-		//System.out.println("Last Available Year For " + tickerSymbol +" Is: "+ lastHeaderValue);
-		assertTrue(lastHeaderValue.matches("\\d{4}"));
+		String regex = "\\d{4}";
+		if (!lastHeaderValue.matches(regex)) {
+			System.out.println("testGetRevenuePeriodHeader_lastAnnualHeader_isYears: ");
+			System.out.println("Last available year for " + tickerSymbol +" is: "+ lastHeaderValue +" and does not match the regex: " + regex);
+		}
+		assertTrue(lastHeaderValue.matches(regex));
 	}
 	
 	//Tests if the site is still following the same HTML layout. Revenue value should contain at least one number like 20.2M. If stock is new, this is okay to fail.
@@ -64,8 +69,12 @@ public class WebScraperTest extends TestCase {
 	public void testGetRevenuePeriodValue_firstValue_hasNumbers() throws NumberFormatException, IOException, InterruptedException {
 		document = Jsoup.connect(incomeUrl).get();
 		String firstRevenueValue = webScraper.getRevenuePeriodValue(document,0);
-		//System.out.println("First Available Value For " + tickerSymbol +" Is: "+ firstRevenueValue);
-		assertTrue(firstRevenueValue.matches("\\d.*"));
+		String regex = "\\d.*";
+		if (!firstRevenueValue.matches(regex)) {
+			System.out.println("testGetRevenuePeriodValue_firstValue_hasNumbers: ");
+			System.out.println("First available value for " + tickerSymbol +" is: "+ firstRevenueValue +" and does not match the regex: " + regex);
+		}
+		assertTrue(firstRevenueValue.matches(regex));
 	}
 	
 	//Tests if the site is still following the same HTML layout. Revenue value should contain at least one number like 4.2B. 
@@ -73,8 +82,12 @@ public class WebScraperTest extends TestCase {
 	public void testGetRevenuePeriodValue_lastValue_hasNumbers() throws NumberFormatException, IOException, InterruptedException {
 		document = Jsoup.connect(incomeUrl).get();
 		String lastHeaderValue = webScraper.getRevenuePeriodValue(document, 4);
-		//System.out.println("Last Available Value For " + tickerSymbol +" Is: "+ lastHeaderValue);
-		assertTrue(lastHeaderValue.matches("\\d.*"));
+		String regex = "\\d.*";
+		if (!lastHeaderValue.matches(regex)) {
+			System.out.println("testGetRevenuePeriodValue_lastValue_hasNumbers: ");
+			System.out.println("Last available value for " + tickerSymbol +" is: "+ lastHeaderValue +" and does not match the regex: " + regex);
+		}
+		assertTrue(lastHeaderValue.matches(regex));
 	}
 	
 	//Tests if the site is still following the same HTML layout. Header should be a full date like 31-Dec-2016. If stock is new, this is okay to fail. 
@@ -82,16 +95,24 @@ public class WebScraperTest extends TestCase {
 	public void testGetRevenuePeriodHeader_firstQuarterHeader_isQuarter() throws NumberFormatException, IOException, InterruptedException {
 		document = Jsoup.connect(incomeQuarterUrl).get();
 		String firstHeaderValue = webScraper.getRevenuePeriodHeader(document, 0);
-		//System.out.println("First Available Year For " + tickerSymbol +" Is: "+ firstHeaderValue);
-		assertTrue(firstHeaderValue.matches("\\d{2}[-][A-Z][a-z]{2}[-]\\d{4}"));
+		String regex = "\\d{2}[-][A-Z][a-z]{2}[-]\\d{4}";
+		if (!firstHeaderValue.matches(regex)) {
+			System.out.println("testGetRevenuePeriodHeader_firstQuarterHeader_isQuarter: ");
+			System.out.println("First available year for " + tickerSymbol +" is: "+ firstHeaderValue +" and does not match the regex: " + regex);
+		}
+		assertTrue(firstHeaderValue.matches(regex));
 	}
 	
 	//Tests if the site is still following the same HTML layout. Header should be a full date like 31-Dec-2016. 
 	public void testGetRevenuePeriodHeader_lastQuarterHeader_isQuarter() throws NumberFormatException, IOException, InterruptedException {
 		document = Jsoup.connect(incomeQuarterUrl).get();
 		String lastHeaderValue = webScraper.getRevenuePeriodHeader(document, 4);
-		System.out.println("Last Available Year For " + tickerSymbol +" Is: "+ lastHeaderValue);
-		assertTrue(lastHeaderValue.matches("\\d{2}[-][A-Z][a-z]{2}[-]\\d{4}"));
+		String regex = "\\d{2}[-][A-Z][a-z]{2}[-]\\d{4}";
+		 if (!lastHeaderValue.matches(regex)) {
+			System.out.println("testGetRevenuePeriodHeader_lastQuarterHeader_isQuarter: ");
+			System.out.println("Last available year for " + tickerSymbol +" is: "+ lastHeaderValue +" and does not match the regex: " + regex);
+		 }
+		assertTrue(lastHeaderValue.matches(regex));
 	}
 	
 	//Tests if the site is still following the same HTML layout. Revenue value should contain at least one number like 20.2M. If stock is new, this is okay to fail.
@@ -99,8 +120,12 @@ public class WebScraperTest extends TestCase {
 	public void testGetRevenuePeriodValue_firstQuarterValue_hasNumbers() throws NumberFormatException, IOException, InterruptedException {
 		document = Jsoup.connect(incomeQuarterUrl).get();
 		String firstRevenueValue = webScraper.getRevenuePeriodValue(document,0);
-		//System.out.println("First Available Value For " + tickerSymbol +" Is: "+ firstRevenueValue);
-		assertTrue(firstRevenueValue.matches("\\d.*"));
+		String regex = "\\d.*";
+		 if (!firstRevenueValue.matches(regex)) {
+			 System.out.println("testGetRevenuePeriodValue_firstQuarterValue_hasNumbers: ");
+			 System.out.println("First Available Value For " + tickerSymbol +" Is: "+ firstRevenueValue +" and does not match the regex: " + regex);
+		 }
+		assertTrue(firstRevenueValue.matches(regex));
 	}
 	
 	//Tests if the site is still following the same HTML layout. Revenue value should contain at least one number like 4.2B. 
@@ -108,8 +133,12 @@ public class WebScraperTest extends TestCase {
 	public void testGetRevenuePeriodValue_lastQuarterValue_hasNumbers() throws NumberFormatException, IOException, InterruptedException {
 		document = Jsoup.connect(incomeQuarterUrl).get();
 		String lastHeaderValue = webScraper.getRevenuePeriodValue(document, 4);
-		//System.out.println("Last Available Value For " + tickerSymbol +" Is: "+ lastHeaderValue);
-		assertTrue(lastHeaderValue.matches("\\d.*"));
+		String regex = "\\d.*";
+		 if (!lastHeaderValue.matches(regex)) {
+			 System.out.println("testGetRevenuePeriodValue_lastQuarterValue_hasNumbers: ");
+			 System.out.println("Last available value for " + tickerSymbol +" is: "+ lastHeaderValue +" and does not match the regex: " + regex);
+		 }
+		assertTrue(lastHeaderValue.matches(regex));
 	}
 	
 	//Tests the Map (LinkedHashMap) to see if it matches the pattern like {2013=77.65B, 2014=86.73B, 2015=92.97B, 2016=84.7B, 2017=89.4B}. 
