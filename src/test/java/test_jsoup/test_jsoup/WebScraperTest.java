@@ -23,10 +23,10 @@ public class WebScraperTest extends TestCase {
 	}
 	
 	@Test
-	public void testGetRevenue() throws NumberFormatException, IOException {
+	public void testGetRevenueByYear() throws NumberFormatException, IOException {
 		//System.out.println("Revenue for " + tickerSymbol +" Is: "+ webScraper.getRevenue());
 		float floatValue;
-		floatValue = Float.parseFloat(webScraper.getRevenue());
+		floatValue = Float.parseFloat(webScraper.getRevenueByYear());
 		assertNotNull(floatValue);
 	}
 }
