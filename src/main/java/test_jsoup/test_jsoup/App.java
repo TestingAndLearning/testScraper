@@ -12,12 +12,12 @@ public class App {
     {
         WebScraper webScraper = new WebScraper("MSFT");
         //webScraper.getCurrentPrice();
-        webScraper.getRevenueByYears();
-        webScraper.getRevenueByQuarters();
+        System.out.println(webScraper.getRevenueByYears());
+        System.out.println(webScraper.getRevenueByQuarters());
         
         WebScraper webScraper2 = new WebScraper("DBX");
         //webScraper2.getCurrentPrice();
-        webScraper2.getRevenueByYears();
-        webScraper2.getRevenueByQuarters();
+        System.out.println(webScraper2.getRevenueByYears());
+        System.out.println(webScraper2.getRevenueByQuarters());
     }
 }

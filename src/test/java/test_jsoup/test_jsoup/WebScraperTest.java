@@ -2,7 +2,11 @@ package test_jsoup.test_jsoup;
 
 import java.io.IOException;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.junit.Test;
+import org.hamcrest.Matcher;
+import org.hamcrest.Matchers.*;
 
 import junit.framework.TestCase;
 
@@ -15,7 +19,7 @@ public class WebScraperTest extends TestCase {
 	String cashUrl;
 	
 	WebScraper webScraper = new WebScraper(tickerSymbol);
-	int scrapeDelay = 1000; //Delay in ms between each HTTP action. 
+	Document document; 
 	
 	public WebScraperTest() throws IOException {
 		mainUrl = "https://www.marketwatch.com/investing/stock/" + tickerSymbol;
@@ -25,29 +29,50 @@ public class WebScraperTest extends TestCase {
 		cashUrl = mainUrl + "/cash-flow";
 	}
 	
+	//Tests if the site is still following the same HTML layout. Stock price should be convertible into a float. 
 	@Test
 	public void testGetCurrentPrice() throws NumberFormatException, IOException, InterruptedException {
-		System.out.println("Stock Price for " + tickerSymbol +" Is: "+ webScraper.getCurrentPrice());
+		System.out.println("Stock Price For " + tickerSymbol +" Is: "+ webScraper.getCurrentPrice());
 		float floatValue;
 		floatValue = Float.parseFloat(webScraper.getCurrentPrice());
-		Thread.sleep(scrapeDelay);
 		assertNotNull(floatValue);
 	}
 	
+	//Tests if the site is still following the same HTML layout. Stock price should be convertible into an int like 2013. 
 	@Test
-	public void testGetRevenuePeriodHeader() throws NumberFormatException, IOException {
-		//System.out.println("Revenue for " + tickerSymbol +" Is: "+ webScraper.getRevenue());
-		float floatValue;
-		floatValue = Float.parseFloat(webScraper.getRevenuePeriodHeader(null, 0));
-		assertNotNull(floatValue);
+	public void testGetRevenuePeriodHeader_firstAnnualHeader() throws NumberFormatException, IOException, InterruptedException {
+		document = Jsoup.connect(incomeUrl).get();
+		String firstHeaderValue = webScraper.getRevenuePeriodHeader(document, 0);
+		int headerIntValue;
+		headerIntValue = Integer.parseInt(firstHeaderValue);
+		System.out.println("First Available Year For " + tickerSymbol +" Is: "+ firstHeaderValue);
+		assertNotNull(headerIntValue);
+	}
+	
+	//Tests if the site is still following the same HTML layout. Stock price should be convertible into an int like 2017. 
+	public void testGetRevenuePeriodHeader_lastAnnualHeader() throws NumberFormatException, IOException, InterruptedException {
+		document = Jsoup.connect(incomeUrl).get();
+		String lastHeaderValue = webScraper.getRevenuePeriodHeader(document, 4);
+		int headerIntValue;
+		headerIntValue = Integer.parseInt(lastHeaderValue);
+		System.out.println("Last Available Year For " + tickerSymbol +" Is: "+ lastHeaderValue);
+		assertNotNull(headerIntValue);
 	}
 	
 	@Test
-	public void testGetRevenuePeriodValue() throws NumberFormatException, IOException {
-		//System.out.println("Revenue for " + tickerSymbol +" Is: "+ webScraper.getRevenue());
-		float floatValue;
-		floatValue = Float.parseFloat(webScraper.getRevenueByYear());
-		assertNotNull(floatValue);
+	public void testGetRevenuePeriodValue_firstValue() throws NumberFormatException, IOException, InterruptedException {
+		document = Jsoup.connect(incomeUrl).get();
+		String firstRevenueValue = webScraper.getRevenuePeriodValue(document,0);
+		System.out.println("First Available Value For " + tickerSymbol +" Is: "+ firstRevenueValue);
+		assertThat("FooBarBaz", ("^Foo"));
+	}
+	
+	@Test
+	public void testGetRevenuePeriodValue_lastValue() throws NumberFormatException, IOException, InterruptedException {
+		document = Jsoup.connect(incomeUrl).get();
+		String lastHeaderValue = webScraper.getRevenuePeriodValue(document, 4);
+		System.out.println("Last Available Value For " + tickerSymbol +" Is: "+ lastHeaderValue);
+		assertThat("FooBarBaz", matchesPattern("^Foo"));
 	}
 	
 	@Test

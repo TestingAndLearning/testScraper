@@ -11,7 +11,11 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class WebScraper {
-	//Add /quarter to the income, balance, and cash urls to get quarterly data, otherwise it is annual by default. 
+	
+	/** ************************** **/
+	/** Begin Initializing Scraper **/
+	/** ************************** **/
+	
 	String tickerSymbol; //MSFT
 	String mainUrl; //https://www.marketwatch.com/investing/stock/${tickerSymbol}
 	
@@ -25,7 +29,6 @@ public class WebScraper {
 	String cashflowQuarterUrl; //https://www.marketwatch.com/investing/stock/${tickerSymbol}/financials/cash-flow/quarter
 	
 	int scrapeDelay = 500; //Delay in ms between each HTTP action. 
-	
 	Document document;
 
 	public WebScraper(String tickerSymbol) throws IOException {
@@ -43,27 +46,45 @@ public class WebScraper {
 		
 	}
 	
+	/** ************************ **/
+	/** End Initializing Scraper **/
+	/** ************************ **/
+	
+	
+	/** *************************************************************************************** **/
+	/** Table Of Contents: 
+	 *  000A: General scraping functions. 
+	 *	001A: ND12 1. Revenue. 
+	 *	
+	 *
+	 */
+	
+	/** *************************************************************************************** **/
+	
+	
+	
 	/** ****************************************************************** **/
 	/** 000A_Start: This section is for getting general stock data values. **/ 
 	/** ****************************************************************** **/
 	
 	//Gets current stock price at the main page. 
-	public String getCurrentPrice() throws IOException {
+	public String getCurrentPrice() throws IOException, InterruptedException {
 		document = Jsoup.connect(mainUrl).get();
 		Elements stockPriceElement = document.select("h3.intraday__price > bg-quote");
 		String elementValue = stockPriceElement.text();
+		Thread.sleep(scrapeDelay);
 		return elementValue;
 	}
 	
 	//The period can be Years or Quarters. Years would be in the format "2013", Quarters would be in the format "30-Sep-2016"
-	public String getRevenuePeriodHeader(Document document, int index) {
+	public String getRevenuePeriodHeader(Document document, int index) throws InterruptedException {
 		Element yearNode = document.getElementsByClass("crDataTable").get(0).select("th[scope]").get(index);
 		String revenueYear = yearNode.text();
 		return revenueYear;
 	}
 	
 	//Gets the revenue values by index, 0 would be oldest period (2013 for years) and 4 would be latest period (2017 for years) at the current year of 2018. The scraper content is an HTML table. 
-	public String getRevenuePeriodValue(Document document, int index) {
+	public String getRevenuePeriodValue(Document document, int index) throws InterruptedException {
 		Element revenueNode = document.getElementsByClass("partialSum").get(0).select("td.valueCell").get(index);
 		String revenueValue = revenueNode.text();
 		return revenueValue;
@@ -88,9 +109,8 @@ public class WebScraper {
 			if (!yearValue.isEmpty()) {
 				revenueByYears.put(yearValue, revenueValue);
 			}
-			Thread.sleep(scrapeDelay);
 		}
-		System.out.println(revenueByYears);
+		Thread.sleep(scrapeDelay);
 		return revenueByYears;
 	}
 	
@@ -126,9 +146,8 @@ public class WebScraper {
 				String parsedQuarterValue = parsedQuarterValueBuilder.toString();
 				revenueByQuarters.put(parsedQuarterValue, revenueValue);
 			}
-			Thread.sleep(scrapeDelay);
 		}
-		System.out.println(revenueByQuarters);
+		Thread.sleep(scrapeDelay);
 		return revenueByQuarters;
 	}
 	
