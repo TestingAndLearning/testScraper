@@ -46,7 +46,7 @@ public class WebScraperTest extends TestCase {
 		String firstHeaderValue = webScraper.getRevenuePeriodHeader(document, 0);
 		String regex = "\\d{4}";
 		if (!firstHeaderValue.matches(regex)) {
-			System.out.println("testGetRevenuePeriodHeader_firstAnnualHeader_isYear: ");
+			System.out.print("testGetRevenuePeriodHeader_firstAnnualHeader_isYear: ");
 			System.out.println("First available year for " + tickerSymbol +" is: "+ firstHeaderValue +" and does not match the regex: " + regex);
 		}
 		assertTrue(firstHeaderValue.matches(regex));
@@ -58,7 +58,7 @@ public class WebScraperTest extends TestCase {
 		String lastHeaderValue = webScraper.getRevenuePeriodHeader(document, 4);
 		String regex = "\\d{4}";
 		if (!lastHeaderValue.matches(regex)) {
-			System.out.println("testGetRevenuePeriodHeader_lastAnnualHeader_isYears: ");
+			System.out.print("testGetRevenuePeriodHeader_lastAnnualHeader_isYears: ");
 			System.out.println("Last available year for " + tickerSymbol +" is: "+ lastHeaderValue +" and does not match the regex: " + regex);
 		}
 		assertTrue(lastHeaderValue.matches(regex));
@@ -71,7 +71,7 @@ public class WebScraperTest extends TestCase {
 		String firstRevenueValue = webScraper.getRevenuePeriodValue(document,0);
 		String regex = "\\d.*";
 		if (!firstRevenueValue.matches(regex)) {
-			System.out.println("testGetRevenuePeriodValue_firstValue_hasNumbers: ");
+			System.out.print("testGetRevenuePeriodValue_firstValue_hasNumbers: ");
 			System.out.println("First available value for " + tickerSymbol +" is: "+ firstRevenueValue +" and does not match the regex: " + regex);
 		}
 		assertTrue(firstRevenueValue.matches(regex));
@@ -84,7 +84,7 @@ public class WebScraperTest extends TestCase {
 		String lastHeaderValue = webScraper.getRevenuePeriodValue(document, 4);
 		String regex = "\\d.*";
 		if (!lastHeaderValue.matches(regex)) {
-			System.out.println("testGetRevenuePeriodValue_lastValue_hasNumbers: ");
+			System.out.print("testGetRevenuePeriodValue_lastValue_hasNumbers: ");
 			System.out.println("Last available value for " + tickerSymbol +" is: "+ lastHeaderValue +" and does not match the regex: " + regex);
 		}
 		assertTrue(lastHeaderValue.matches(regex));
@@ -97,7 +97,7 @@ public class WebScraperTest extends TestCase {
 		String firstHeaderValue = webScraper.getRevenuePeriodHeader(document, 0);
 		String regex = "\\d{2}[-][A-Z][a-z]{2}[-]\\d{4}";
 		if (!firstHeaderValue.matches(regex)) {
-			System.out.println("testGetRevenuePeriodHeader_firstQuarterHeader_isQuarter: ");
+			System.out.print("testGetRevenuePeriodHeader_firstQuarterHeader_isQuarter: ");
 			System.out.println("First available year for " + tickerSymbol +" is: "+ firstHeaderValue +" and does not match the regex: " + regex);
 		}
 		assertTrue(firstHeaderValue.matches(regex));
@@ -109,7 +109,7 @@ public class WebScraperTest extends TestCase {
 		String lastHeaderValue = webScraper.getRevenuePeriodHeader(document, 4);
 		String regex = "\\d{2}[-][A-Z][a-z]{2}[-]\\d{4}";
 		 if (!lastHeaderValue.matches(regex)) {
-			System.out.println("testGetRevenuePeriodHeader_lastQuarterHeader_isQuarter: ");
+			System.out.print("testGetRevenuePeriodHeader_lastQuarterHeader_isQuarter: ");
 			System.out.println("Last available year for " + tickerSymbol +" is: "+ lastHeaderValue +" and does not match the regex: " + regex);
 		 }
 		assertTrue(lastHeaderValue.matches(regex));
@@ -122,7 +122,7 @@ public class WebScraperTest extends TestCase {
 		String firstRevenueValue = webScraper.getRevenuePeriodValue(document,0);
 		String regex = "\\d.*";
 		 if (!firstRevenueValue.matches(regex)) {
-			 System.out.println("testGetRevenuePeriodValue_firstQuarterValue_hasNumbers: ");
+			 System.out.print("testGetRevenuePeriodValue_firstQuarterValue_hasNumbers: ");
 			 System.out.println("First Available Value For " + tickerSymbol +" Is: "+ firstRevenueValue +" and does not match the regex: " + regex);
 		 }
 		assertTrue(firstRevenueValue.matches(regex));
@@ -135,7 +135,7 @@ public class WebScraperTest extends TestCase {
 		String lastHeaderValue = webScraper.getRevenuePeriodValue(document, 4);
 		String regex = "\\d.*";
 		 if (!lastHeaderValue.matches(regex)) {
-			 System.out.println("testGetRevenuePeriodValue_lastQuarterValue_hasNumbers: ");
+			 System.out.print("testGetRevenuePeriodValue_lastQuarterValue_hasNumbers: ");
 			 System.out.println("Last available value for " + tickerSymbol +" is: "+ lastHeaderValue +" and does not match the regex: " + regex);
 		 }
 		assertTrue(lastHeaderValue.matches(regex));
@@ -148,13 +148,14 @@ public class WebScraperTest extends TestCase {
 		Set<String> keys = revenueByYears.keySet();
 		boolean matchesPattern = true;
 		for(String k:keys) {
-			//System.out.println("Key: " + k + " Value: " + revenueByYears.get(k));
 			if (!k.matches("\\d{4}")) {
-				System.out.println("Key pattern: \"" + k + " \" does not match pattern for Year \"\\d{4}");
+				System.out.print("testGetRevenueByYears: ");
+				System.out.println("Key pattern: \"" + k + "\" does not match pattern for Year \"\\d{4}\"");
 				matchesPattern = false;
 			}
 			if (!revenueByYears.get(k).matches("\\d.*")) {
-				System.out.println("Key: " + "\"" + k + "\" value's pattern: \"" + revenueByYears.get(k) + " \" does not match pattern for Revenue \"\\d.*\"");
+				System.out.print("testGetRevenueByYears: ");
+				System.out.println("Key: " + "\"" + k + "\" value's pattern: \"" + revenueByYears.get(k) + "\" does not match pattern for Revenue \"\\d.*\"");
 				matchesPattern = false;
 			}
 		}
@@ -168,13 +169,14 @@ public class WebScraperTest extends TestCase {
 		Set<String> keys = revenueByQuarters.keySet();
 		boolean matchesPattern = true;
 		for(String k:keys) {
-			//System.out.println("Key: " + k + " Value: " + revenueByQuarters.get(k));
 			if (!k.matches("\\d{4}[-][A-Z][\\d]")) {
-				System.out.println("Key pattern: \"" + k + " \" does not match pattern for Year \"\\d{4}[-][A-Z][\\d]\"");
+				System.out.print("testGetRevenueByQuarters: ");
+				System.out.println("Key pattern: \"" + k + "\" does not match pattern for Year \"\\d{4}[-][A-Z][\\d]\"");
 				matchesPattern = false;
 			}
 			if (!revenueByQuarters.get(k).matches("\\d.*")) {
-				System.out.println("Key: " + "\"" + k + "\" value's pattern: \"" + revenueByQuarters.get(k) + " \" does not match pattern for Revenue \"\\d.*\"");
+				System.out.print("testGetRevenueByQuarters: ");
+				System.out.println("Key: " + "\"" + k + "\" value's pattern: \"" + revenueByQuarters.get(k) + "\" does not match pattern for Revenue \"\\d.*\"");
 				matchesPattern = false;
 			}
 		}
