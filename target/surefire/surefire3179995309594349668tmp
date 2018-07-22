@@ -1,8 +1,0 @@
-#surefire
-#Sat Jul 21 14:16:42 PDT 2018
-maven.ext.class.path=C\:\\Program Files\\NetBeans 8.2\\java\\maven-nblib\\netbeans-eventspy.jar
-user.dir=C\:\\Projects\\JavaProjects\\testscraper
-file.encoding=UTF-8
-localRepository=C\:\\Users\\Max\\.m2\\repository
-basedir=C\:\\Projects\\JavaProjects\\testscraper
-test=test_jsoup.test_jsoup.WebScraperTest

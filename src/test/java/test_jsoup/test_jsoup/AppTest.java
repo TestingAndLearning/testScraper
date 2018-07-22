@@ -1,16 +1,19 @@
 package test_jsoup.test_jsoup;
 
-import junit.framework.Test;
+import org.junit.Test;
+
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 public class AppTest extends TestCase
 {
 	
-	
-	public AppTest() {
-		
-	}
-	
-	
+
+				public AppTest() {
+
+				}
+
+				@Test
+				public void testMain() {
+								assertTrue(true);
+				}
 }
