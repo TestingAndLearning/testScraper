@@ -10,14 +10,12 @@ public class App {
 	
     public static void main( String[] args ) throws IOException, InterruptedException
     {
-        NDScraperBase webScraper = new NDScraperBase("MSFT");
-        //webScraper.getCurrentPrice();
-        System.out.println(webScraper.getRevenueByYears());
-        System.out.println(webScraper.getRevenueByQuarters());
+        ND1Revenue ND1Revenue = new ND1Revenue("MSFT");
+        System.out.println(ND1Revenue.getRevenueByYears());
+        System.out.println(ND1Revenue.getRevenueByQuarters());
         
-        NDScraperBase webScraper2 = new NDScraperBase("DBX");
-        //webScraper2.getCurrentPrice();
-        System.out.println(webScraper2.getRevenueByYears());
-        System.out.println(webScraper2.getRevenueByQuarters());
+        ND1Revenue ND1Revenue2 = new ND1Revenue("DBX");
+        System.out.println(ND1Revenue2.getRevenueByYears());
+        System.out.println(ND1Revenue2.getRevenueByQuarters());
     }
 }
