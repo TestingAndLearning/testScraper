@@ -11,7 +11,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class WebScraper {
-	//Remember hash table is synchronized and hash map is not. 
 	//Add /quarter to the income, balance, and cash urls to get quarterly data, otherwise it is annual by default. 
 	String tickerSymbol;
 	String mainUrl;
@@ -29,12 +28,13 @@ public class WebScraper {
 		incomeUrl = mainUrl + "/financials";
 		balanceUrl = mainUrl + "/balance-sheet";
 		cashUrl = mainUrl + "/cash-flow";
-		
-		//document = Jsoup.connect(mainUrl).get();
-		//System.out.println(mainUrl);
 	}
 	
-	//Gets current price at the main page. 
+	/** ****************************************************************** **/
+	/** 000A_Start: This section is for getting general stock data values. **/ 
+	/** ****************************************************************** **/
+	
+	//Gets current stock price at the main page. 
 	public String getCurrentPrice() throws IOException {
 		document = Jsoup.connect(mainUrl).get();
 		Elements stockPriceElement = document.select("h3.intraday__price > bg-quote");
@@ -42,24 +42,29 @@ public class WebScraper {
 		return elementValue;
 	}
 	
-	//The period can be Years or Quarters. Years would be "2013", Quarters would be "30-Sep-2016"
+	//The period can be Years or Quarters. Years would be in the format "2013", Quarters would be in the format "30-Sep-2016"
 	public String getRevenuePeriodHeader(Document document, int index) {
 		Element yearNode = document.getElementsByClass("crDataTable").get(0).select("th[scope]").get(index);
 		String revenueYear = yearNode.text();
 		return revenueYear;
 	}
 	
-	//Gets the revenue values by index, 0 would be oldest period (2013 for years) and 4 would be latest period (2017 for years) at the current year of 2018. 
+	//Gets the revenue values by index, 0 would be oldest period (2013 for years) and 4 would be latest period (2017 for years) at the current year of 2018. The scraper content is an HTML table. 
 	public String getRevenuePeriodValue(Document document, int index) {
 		Element revenueNode = document.getElementsByClass("partialSum").get(0).select("td.valueCell").get(index);
 		String revenueValue = revenueNode.text();
 		return revenueValue;
 	}
 	
-	/** This section is for getting ND12 values 
-	 * @throws InterruptedException **/
-	//Returns a hash map of data like so: { 2015=1.2b, 2016="2.4b", 2017=2.2b }.
-	//1. Revenue
+	/** ******** **/
+	/** 000A_End **/
+	/** ******** **/
+	
+	/** ********************** **/
+	/** 001A_Start: #1 Revenue **/
+	/** ********************** **/
+	
+	//Returns a map of data like so: { 2015=1.2b, 2016="2.4b", 2017=2.2b }.
 	public Map<String, String> getRevenueByYears() throws IOException, InterruptedException {
 		//https://www.marketwatch.com/investing/stock/${ticker}/financials
 		document = Jsoup.connect(incomeUrl).get();
@@ -115,4 +120,8 @@ public class WebScraper {
 		System.out.println(revenueByQuarters);
 		return revenueByQuarters;
 	}
+	
+	/** ******** **/
+	/** 001A_End **/
+	/** ******** **/
 }

@@ -23,7 +23,31 @@ public class WebScraperTest extends TestCase {
 	}
 	
 	@Test
-	public void testGetRevenueByYear() throws NumberFormatException, IOException {
+	public void testGetRevenuePeriodHeader() throws NumberFormatException, IOException {
+		//System.out.println("Revenue for " + tickerSymbol +" Is: "+ webScraper.getRevenue());
+		float floatValue;
+		floatValue = Float.parseFloat(webScraper.getRevenueByYear());
+		assertNotNull(floatValue);
+	}
+	
+	@Test
+	public void testGetRevenuePeriodValue() throws NumberFormatException, IOException {
+		//System.out.println("Revenue for " + tickerSymbol +" Is: "+ webScraper.getRevenue());
+		float floatValue;
+		floatValue = Float.parseFloat(webScraper.getRevenueByYear());
+		assertNotNull(floatValue);
+	}
+	
+	@Test
+	public void testGetRevenueByYears() throws NumberFormatException, IOException {
+		//System.out.println("Revenue for " + tickerSymbol +" Is: "+ webScraper.getRevenue());
+		float floatValue;
+		floatValue = Float.parseFloat(webScraper.getRevenueByYear());
+		assertNotNull(floatValue);
+	}
+	
+	@Test
+	public void testGetRevenueByQuarters() throws NumberFormatException, IOException {
 		//System.out.println("Revenue for " + tickerSymbol +" Is: "+ webScraper.getRevenue());
 		float floatValue;
 		floatValue = Float.parseFloat(webScraper.getRevenueByYear());
