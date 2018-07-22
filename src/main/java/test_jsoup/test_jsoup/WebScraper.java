@@ -12,22 +12,35 @@ import org.jsoup.select.Elements;
 
 public class WebScraper {
 	//Add /quarter to the income, balance, and cash urls to get quarterly data, otherwise it is annual by default. 
-	String tickerSymbol;
-	String mainUrl;
-	String incomeUrl; //Financials. 
-	String balanceUrl;
-	String cashUrl;
+	String tickerSymbol; //MSFT
+	String mainUrl; //https://www.marketwatch.com/investing/stock/${tickerSymbol}
 	
-	int scrapeDelay = 500; //Delay in ms between each get action. 
+	String incomeUrl; //https://www.marketwatch.com/investing/stock/${tickerSymbol}/financials
+	String incomeQuarterUrl; //https://www.marketwatch.com/investing/stock/${tickerSymbol}/financials/income/quarter
+	
+	String balanceSheetUrl; //https://www.marketwatch.com/investing/stock/${tickerSymbol}/financials/balance-sheet
+	String balanceSheetQuarterUrl; //https://www.marketwatch.com/investing/stock/${tickerSymbol}/financials/balance-sheet/quarter
+	
+	String cashflowUrl; //https://www.marketwatch.com/investing/stock/${tickerSymbol}/financials/cash-flow
+	String cashflowQuarterUrl; //https://www.marketwatch.com/investing/stock/${tickerSymbol}/financials/cash-flow/quarter
+	
+	int scrapeDelay = 500; //Delay in ms between each HTTP action. 
 	
 	Document document;
 
 	public WebScraper(String tickerSymbol) throws IOException {
 		this.tickerSymbol = tickerSymbol;
 		mainUrl = "https://www.marketwatch.com/investing/stock/" + tickerSymbol;
+		
 		incomeUrl = mainUrl + "/financials";
-		balanceUrl = mainUrl + "/balance-sheet";
-		cashUrl = mainUrl + "/cash-flow";
+		incomeQuarterUrl = incomeUrl + "/income/quarter";
+		
+		balanceSheetUrl = mainUrl + "/balance-sheet";
+		balanceSheetQuarterUrl = balanceSheetUrl + "/quarter";
+		
+		cashflowUrl = mainUrl + "/cash-flow";
+		cashflowQuarterUrl = cashflowUrl + "/quarter";
+		
 	}
 	
 	/** ****************************************************************** **/
@@ -64,9 +77,8 @@ public class WebScraper {
 	/** 001A_Start: #1 Revenue **/
 	/** ********************** **/
 	
-	//Returns a map of data like so: { 2015=1.2b, 2016="2.4b", 2017=2.2b }.
+	//Returns a map of data like so: { "2015"="1.2b", "2016"="2.4b", "2017"="2.2b" }.
 	public Map<String, String> getRevenueByYears() throws IOException, InterruptedException {
-		//https://www.marketwatch.com/investing/stock/${ticker}/financials
 		document = Jsoup.connect(incomeUrl).get();
 		Map<String, String> revenueByYears = new LinkedHashMap<String, String>();
 
@@ -83,8 +95,7 @@ public class WebScraper {
 	}
 	
 	public Map<String, String> getRevenueByQuarters() throws IOException, InterruptedException {
-		//https://www.marketwatch.com/investing/stock/${ticker}/financials
-		document = Jsoup.connect(incomeUrl+"/income/quarter").get();
+		document = Jsoup.connect(incomeQuarterUrl).get();
 		Map<String, String> revenueByQuarters = new LinkedHashMap<String, String>();
 		
 		for (int i = 0; i < 5; i++) {
