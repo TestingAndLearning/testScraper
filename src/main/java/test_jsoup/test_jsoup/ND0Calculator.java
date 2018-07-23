@@ -16,17 +16,30 @@ public class ND0Calculator {
 				}
 				
 				//Past 3 years
-				public boolean hasIncreasingAnnualRevenue() throws IOException, InterruptedException {
-								Map<String, String> revenueByYears = webScraper.getRevenueByYears();
-								Set<String> keys = revenueByYears.keySet();
-								//System.out.println("Price: " + webScraper.getCurrentPrice());
-								ArrayList<String> allYears = new ArrayList<>();
-								//System.out.println(keys.size());
-								for (String k : keys) {
-												allYears.add(k);
-								}
-								System.out.println(allYears.get(3));
-								return false;
+				public boolean hasIncreasingYearlyRevenue() throws IOException, InterruptedException {
+					Map<String, String> revenueByYears = webScraper.getRevenueByYears();
+					Set<String> keys = revenueByYears.keySet();
+					ArrayList<String> allYears = new ArrayList<>();
+					
+					if (keys.size() < 2) {
+						System.out.println("Not Enough Annual Data. ");
+						return (Boolean) null;
+					} else {
+						for (String k : keys) {
+							allYears.add(k);
+						}
+						
+						System.out.println(revenueByYears.get(allYears.size() - 1));
+						float latestYearRevenue = Float.parseFloat(revenueByYears.get(allYears.size() - 1).replace("B", "").replace("M", ""));
+						float secondLatestYearRevenue = Float.parseFloat(revenueByYears.get(allYears.size() - 2).replace("B", "").replace("M", ""));
+						
+						if (latestYearRevenue > secondLatestYearRevenue) {
+							return true;
+						} else if (latestYearRevenue < secondLatestYearRevenue) {
+							return false;
+						}
+					}
+					return (Boolean) null;
 				}
 				
 				//Past 3 quarters

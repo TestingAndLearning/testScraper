@@ -19,7 +19,7 @@ public class App {
         //System.out.println(ND1Revenue2.getRevenueByQuarters());
 								
 								ND0Calculator ndCalc = new ND0Calculator("MSFT");
-								ndCalc.hasIncreasingAnnualRevenue();
-								ndCalc.hasIncreasingQuarterlyRevenue();
+								System.out.println(ndCalc.hasIncreasingYearlyRevenue());
+								System.out.println(ndCalc.hasIncreasingQuarterlyRevenue()); 
     }
 }
