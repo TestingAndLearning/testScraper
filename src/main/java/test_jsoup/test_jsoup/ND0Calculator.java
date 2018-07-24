@@ -16,60 +16,43 @@ public class ND0Calculator {
 				}
 				
 				/** Start: 1 Revenue **/
-				//Compares only the latest complete fiscal year and the year before that. 
-				public boolean hasIncreasingYearlyRevenue() throws IOException, InterruptedException {
-					Map<String, String> revenueByYears = webScraper.getRevenueByYears();
-					Set<String> keys = revenueByYears.keySet();
-					ArrayList<String> allYears = new ArrayList<>();
+				//For YEAR, compares only the latest complete fiscal year and the year before that. 
+				//For QUARTER, compares only latest complete quarter and the quarter before that. 
+				public Boolean hasIncreasingRevenue(Period period) throws IOException, InterruptedException {
+					Map<String, String> revenueByPeriod = null;
 					
-					if (keys.size() < 2) {
-						System.out.println("Not Enough Annual Data. ");
-						return (Boolean) null;
-					} else {
-						for (String k : keys) {
-							allYears.add(k);
-						}
-						
-						String unParsedLatestYearRevenue = revenueByYears.get(allYears.get(allYears.size() - 1));
-						String unParsedSecondLatestYearRevenue = revenueByYears.get(allYears.get(allYears.size() - 2));
-						float latestYearRevenue = Float.parseFloat(unParsedLatestYearRevenue.replace("B", "").replace("M", ""));
-						float secondLatestYearRevenue = Float.parseFloat(unParsedSecondLatestYearRevenue.replace("B", "").replace("M", ""));
-						
-						if (latestYearRevenue > secondLatestYearRevenue) {
-							return true;
-						} else if (latestYearRevenue < secondLatestYearRevenue) {
-							return false;
-						}
+					switch (period) { 
+						case YEAR: 		revenueByPeriod = webScraper.getRevenueByYears();
+										break;
+						case QUARTER: 	revenueByPeriod = webScraper.getRevenueByQuarters();
+										break;
+						default: 		System.out.println("Invalid period entered: " + period);
+										break;
 					}
-					return (Boolean) null;
-				}
-				
-				//Compares only latest complete quarter and the quarter before that. 
-				public boolean hasIncreasingQuarterlyRevenue() throws IOException, InterruptedException{
-					Map<String, String> revenueByQuarters = webScraper.getRevenueByQuarters();
-					Set<String> keys = revenueByQuarters.keySet();
+
+					Set<String> keys = revenueByPeriod.keySet();
 					ArrayList<String> allQuarters = new ArrayList<>();
 					
 					if (keys.size() < 2) {
 						System.out.println("Not Enough Quarterly Data. ");
-						return (Boolean) null;
+						return null;
 					} else {
 						for (String k : keys) {
 							allQuarters.add(k);
 						}
 						
-						String unParsedLatestQuartersRevenue = revenueByQuarters.get(allQuarters.get(allQuarters.size() - 1));
-						String unParsedSecondLatestQuartersRevenue = revenueByQuarters.get(allQuarters.get(allQuarters.size() - 2));
-						float latestQuartersRevenue = Float.parseFloat(unParsedLatestQuartersRevenue.replace("B", "").replace("M", ""));
-						float secondLatestQuartersRevenue = Float.parseFloat(unParsedSecondLatestQuartersRevenue.replace("B", "").replace("M", ""));
+						String unParsedLatestPeriodRevenue = revenueByPeriod.get(allQuarters.get(allQuarters.size() - 1));
+						String unParsedSecondLatestPeriodRevenue = revenueByPeriod.get(allQuarters.get(allQuarters.size() - 2));
+						Long latestPeriodRevenue = webScraper.getParsedAlphaNumericMoney(unParsedLatestPeriodRevenue);
+						Long secondLatestPeriodRevenue = webScraper.getParsedAlphaNumericMoney(unParsedSecondLatestPeriodRevenue);
 						
-						if (latestQuartersRevenue > secondLatestQuartersRevenue) {
+						if (latestPeriodRevenue > secondLatestPeriodRevenue) {
 							return true;
-						} else if (latestQuartersRevenue < secondLatestQuartersRevenue) {
+						} else if (latestPeriodRevenue < secondLatestPeriodRevenue) {
 							return false;
 						}
 					}
-					return (Boolean) null;
+					return null;
 				}
 				/** End: 1 Revenue **/
 }
