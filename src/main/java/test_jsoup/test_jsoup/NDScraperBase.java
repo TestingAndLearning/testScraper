@@ -1,6 +1,7 @@
 package test_jsoup.test_jsoup;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -75,5 +76,48 @@ public class NDScraperBase {
 	/** 000A_End **/
 	/** ******** **/
 	
+	/** ****************************************************** **/
+	/** 000B_Start: This Section is for parsing money values.  **/
+	/** ****************************************************** **/
+	
+	//Converts 11.1B to 11,100,000,000 and 2M to 2,000,000 without the commas. 
+	public Long getParsedAlphaNumericMoney(String money) {
+		int decimalSpaces = 0;
+		
+		if (!money.contains("M") && !money.contains("B"))
+		{
+			System.out.println("No M or B detected, invalid input for money");
+			return null;
+		}
+		
+		if (money.contains(".")) {
+			decimalSpaces = money.split("\\.")[1].length()-1; //-1 because of M and B at the end. 
+		}
+		StringBuilder zeroAppender = new StringBuilder();
+		zeroAppender.append(money);
+		
+		if (money.contains("B")) {
+			for (int i = 0; i < 9 - decimalSpaces; i++) {
+				zeroAppender.append("0");
+			}
+			
+		} else if (money.contains("M")) {
+			for (int i = 0; i < 6 - decimalSpaces; i++) {
+				zeroAppender.append("0");
+			}
+			
+		} else {
+			System.out.println("Money already numeric. ");
+			return Long.parseLong(money);
+		}
+		//String numericMoney = zeroAppender.toString().replace("B", "").replace("B", "").replace(".", "");
+		String numericMoney = zeroAppender.toString().replaceAll("[BM.]", "");
+		long parsedAlphaNumericMoney = Long.parseLong(numericMoney);
+		return parsedAlphaNumericMoney;
+	}
+	
+	/** ******** **/
+	/** 000B_End **/
+	/** ******** **/
 
 }

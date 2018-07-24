@@ -15,7 +15,8 @@ public class ND0Calculator {
 					webScraper = new ND1Revenue(tickerSymbol);
 				}
 				
-				//Past 3 years
+				/** Start: 1 Revenue **/
+				//Compares only the latest complete fiscal year and the year before that. 
 				public boolean hasIncreasingYearlyRevenue() throws IOException, InterruptedException {
 					Map<String, String> revenueByYears = webScraper.getRevenueByYears();
 					Set<String> keys = revenueByYears.keySet();
@@ -43,7 +44,7 @@ public class ND0Calculator {
 					return (Boolean) null;
 				}
 				
-				//Past 3 quarters
+				//Compares only latest complete quarter and the quarter before that. 
 				public boolean hasIncreasingQuarterlyRevenue() throws IOException, InterruptedException{
 					Map<String, String> revenueByQuarters = webScraper.getRevenueByQuarters();
 					Set<String> keys = revenueByQuarters.keySet();
@@ -70,4 +71,5 @@ public class ND0Calculator {
 					}
 					return (Boolean) null;
 				}
+				/** End: 1 Revenue **/
 }
