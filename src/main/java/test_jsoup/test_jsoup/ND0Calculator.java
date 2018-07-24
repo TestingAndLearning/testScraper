@@ -11,8 +11,8 @@ public class ND0Calculator {
 				ND1Revenue webScraper;
 				
 				public ND0Calculator(String tickerSymbol) throws IOException, InterruptedException{
-								this.tickerSymbol = tickerSymbol;
-								webScraper = new ND1Revenue(tickerSymbol);
+					this.tickerSymbol = tickerSymbol;
+					webScraper = new ND1Revenue(tickerSymbol);
 				}
 				
 				//Past 3 years
@@ -29,9 +29,10 @@ public class ND0Calculator {
 							allYears.add(k);
 						}
 						
-						System.out.println(revenueByYears.get(allYears.size() - 1));
-						float latestYearRevenue = Float.parseFloat(revenueByYears.get(allYears.size() - 1).replace("B", "").replace("M", ""));
-						float secondLatestYearRevenue = Float.parseFloat(revenueByYears.get(allYears.size() - 2).replace("B", "").replace("M", ""));
+						String unParsedLatestYearRevenue = revenueByYears.get(allYears.get(allYears.size() - 1));
+						String unParsedSecondLatestYearRevenue = revenueByYears.get(allYears.get(allYears.size() - 2));
+						float latestYearRevenue = Float.parseFloat(unParsedLatestYearRevenue.replace("B", "").replace("M", ""));
+						float secondLatestYearRevenue = Float.parseFloat(unParsedSecondLatestYearRevenue.replace("B", "").replace("M", ""));
 						
 						if (latestYearRevenue > secondLatestYearRevenue) {
 							return true;
@@ -44,9 +45,29 @@ public class ND0Calculator {
 				
 				//Past 3 quarters
 				public boolean hasIncreasingQuarterlyRevenue() throws IOException, InterruptedException{
-								//Map<String, String> revenueByQuarters = webScraper.getRevenueByQuarters();
-								//Set<String> keys = revenueByQuarters.keySet();
-								System.out.println("");
-								return false;
+					Map<String, String> revenueByQuarters = webScraper.getRevenueByQuarters();
+					Set<String> keys = revenueByQuarters.keySet();
+					ArrayList<String> allQuarters = new ArrayList<>();
+					
+					if (keys.size() < 2) {
+						System.out.println("Not Enough Quarterly Data. ");
+						return (Boolean) null;
+					} else {
+						for (String k : keys) {
+							allQuarters.add(k);
+						}
+						
+						String unParsedLatestQuartersRevenue = revenueByQuarters.get(allQuarters.get(allQuarters.size() - 1));
+						String unParsedSecondLatestQuartersRevenue = revenueByQuarters.get(allQuarters.get(allQuarters.size() - 2));
+						float latestQuartersRevenue = Float.parseFloat(unParsedLatestQuartersRevenue.replace("B", "").replace("M", ""));
+						float secondLatestQuartersRevenue = Float.parseFloat(unParsedSecondLatestQuartersRevenue.replace("B", "").replace("M", ""));
+						
+						if (latestQuartersRevenue > secondLatestQuartersRevenue) {
+							return true;
+						} else if (latestQuartersRevenue < secondLatestQuartersRevenue) {
+							return false;
+						}
+					}
+					return (Boolean) null;
 				}
 }
