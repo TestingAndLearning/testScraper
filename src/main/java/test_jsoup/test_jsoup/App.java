@@ -18,8 +18,8 @@ public class App {
         //System.out.println(ND1Revenue2.getRevenueByYears());
         //System.out.println(ND1Revenue2.getRevenueByQuarters());
 								
-								ND0Calculator ndCalc = new ND0Calculator("MSFT");
-								System.out.println(ndCalc.hasIncreasingRevenue(Period.YEAR));
-								System.out.println(ndCalc.hasIncreasingRevenue(Period.QUARTER)); 
+		ND0Calculator ndCalc = new ND0Calculator("MSFT");
+		System.out.println(ndCalc.hasIncreasingRevenue(Period.YEAR));
+		System.out.println(ndCalc.hasIncreasingRevenue(Period.QUARTER)); 
     }
 }
