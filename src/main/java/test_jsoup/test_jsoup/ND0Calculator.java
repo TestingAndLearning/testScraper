@@ -23,6 +23,7 @@ public class ND0Calculator {
 					
 					switch (period) { 
 						case YEAR: 		revenueByPeriod = webScraper.getRevenueByYears();
+										System.out.println(revenueByPeriod);
 										break;
 						case QUARTER: 	revenueByPeriod = webScraper.getRevenueByQuarters();
 										break;
