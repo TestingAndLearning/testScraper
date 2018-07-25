@@ -29,7 +29,7 @@ public class ND2EPSTest {
 
 	//Tests if the site is still following the same HTML layout. Header should be a four digit number like 2013. If stock is new, this is okay to fail. 
 	@Test
-	public void testGetEPSPeriodHeader() throws InterruptedException, IOException {
+	public void testGetFirstEPSPeriodHeader() throws InterruptedException, IOException {
 		Document incomeDocument = Jsoup.connect(incomeUrl).get();
 		Thread.sleep(scrapeDelay);
 		String firstHeaderValue = webScraper.getEPSPeriodHeader(incomeDocument, 0);
@@ -41,9 +41,19 @@ public class ND2EPSTest {
 		assertTrue(firstHeaderValue.matches(regex));
 	}
 	
+	//For EPS, there may not be a number for latest year. 
 	@Test
-	public void testGetEPSPeriodValue() {
-		
+	public void testGetFirstEPSPeriodValue() throws InterruptedException, IOException {
+		Document incomeDocument = Jsoup.connect(incomeUrl).get();
+		Thread.sleep(scrapeDelay);
+		String firstEPSValue = webScraper.getEPSPeriodValue(incomeDocument,0);
+		String regex = "\\d.*";
+		if (!firstEPSValue.matches(regex)) {
+			System.out.print("testGetEPSPeriodValue_firstValue_hasNumbers: ");
+			System.out.println("First available value for " + tickerSymbol +" is: "+ firstEPSValue +" and does not match the regex: " + regex);
+		}
+		System.out.println(firstEPSValue);
+		assertTrue(firstEPSValue.matches(regex));
 	}
 
 }
