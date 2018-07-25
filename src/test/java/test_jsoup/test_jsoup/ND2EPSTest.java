@@ -52,7 +52,6 @@ public class ND2EPSTest {
 			System.out.print("testGetEPSPeriodValue_firstValue_hasNumbers: ");
 			System.out.println("First available value for " + tickerSymbol +" is: "+ firstEPSValue +" and does not match the regex: " + regex);
 		}
-		System.out.println(firstEPSValue);
 		assertTrue(firstEPSValue.matches(regex));
 	}
 

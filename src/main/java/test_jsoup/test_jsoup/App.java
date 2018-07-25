@@ -2,6 +2,9 @@ package test_jsoup.test_jsoup;
 
 import java.io.IOException;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
 /**
  * Hello world!
  *
@@ -23,7 +26,8 @@ public class App {
 		//System.out.println(ndCalc.hasIncreasingRevenue(Period.QUARTER)); 
     	
     		ND2EPS nd2EPS = new ND2EPS("MSFT");
-    		nd2EPS.getEPSPeriodHeader(document, index);
-    		nd2EPS.getEPSPeriodValue(document, index);
+    		Document incomeDocument = Jsoup.connect("https://www.marketwatch.com/investing/stock/MSFT/financials").get();
+    		nd2EPS.getEPSPeriodHeader(incomeDocument, 0);
+    		nd2EPS.getEPSPeriodValue(incomeDocument, 0);
     }
 }
