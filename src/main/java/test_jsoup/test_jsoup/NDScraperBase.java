@@ -86,7 +86,7 @@ public class NDScraperBase {
 		
 		if (!money.contains("M") && !money.contains("B"))
 		{
-			System.out.println("No M or B detected, invalid input for money");
+			System.out.println("No M or B detected, invalid input for money. ");
 			return null;
 		}
 		
