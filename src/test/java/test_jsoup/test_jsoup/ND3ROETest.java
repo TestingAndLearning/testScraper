@@ -29,7 +29,7 @@ public class ND3ROETest {
 		mainUrl = "https://www.marketwatch.com/investing/stock/" + tickerSymbol;
 		incomeUrl = mainUrl + "/financials";
 		incomeQuarterUrl = incomeUrl + "/income/quarter";
-		balanceSheetUrl = mainUrl + "/balance-sheet";
+		balanceSheetUrl = incomeUrl + "/balance-sheet";
 		balanceSheetQuarterUrl = balanceSheetUrl + "/quarter";
 		cashflowUrl = mainUrl + "/cash-flow";
 		cashflowQuarterUrl = cashflowUrl + "/quarter";
@@ -37,7 +37,7 @@ public class ND3ROETest {
 
 	//Tests if the site is still following the same HTML layout. Header should be a four digit number like 2013. If stock is new, this is okay to fail. 
 	@Test
-	public void testGetFirstNetIncomePeriodHeader() throws InterruptedException, IOException {
+	public void testGetFirstNetIncomePeriodHeader_firstAnnualHeader_isYear() throws InterruptedException, IOException {
 		Document incomeDocument = Jsoup.connect(incomeUrl).get();
 		Thread.sleep(scrapeDelay);
 		String firstHeaderValue = webScraper.getNetIncomePeriodHeader(incomeDocument, 0);
@@ -46,12 +46,11 @@ public class ND3ROETest {
 			System.out.print("testGetNetIncomePeriodHeader_firstAnnualHeader_isYear: ");
 			System.out.println("First available year for " + tickerSymbol +" is: "+ firstHeaderValue +" and does not match the regex: " + regex);
 		}
-		System.out.println(firstHeaderValue);
 		assertTrue(firstHeaderValue.matches(regex));
 	}
 	
 	@Test
-	public void testGetFirstNetIncomePeriodValue() throws InterruptedException, IOException {
+	public void testGetFirstNetIncomePeriodValue_firstValue_hasNumbers() throws InterruptedException, IOException {
 		Document incomeDocument = Jsoup.connect(incomeUrl).get();
 		Thread.sleep(scrapeDelay);
 		String firstNetIncomeValue = webScraper.getNetIncomePeriodValue(incomeDocument,0);
@@ -60,39 +59,38 @@ public class ND3ROETest {
 			System.out.print("testGetNetIncomePeriodValue_firstValue_hasNumbers: ");
 			System.out.println("First available value for " + tickerSymbol +" is: "+ firstNetIncomeValue +" and does not match the regex: " + regex);
 		}
-		System.out.println(firstNetIncomeValue);
 		assertTrue(firstNetIncomeValue.matches(regex));
 	}
 	
-	/**
 	//Tests if the site is still following the same HTML layout. Header should be a four digit number like 2013. If stock is new, this is okay to fail. 
 	@Test
-	public void testGetFirstShareholderEquityPeriodHeader() throws InterruptedException, IOException {
+	public void testGetFirstShareHolderEquityPeriodHeader_firstAnnualHeader_isYear() throws InterruptedException, IOException {
 		Document balanceSheetDocument = Jsoup.connect(balanceSheetUrl).get();
 		Thread.sleep(scrapeDelay);
-		String firstHeaderValue = webScraper.getShareholderEquityPeriodHeader(incomeDocument, 0);
+		String firstHeaderValue = webScraper.getShareHolderEquityPeriodHeader(balanceSheetDocument, 0);
 		String regex = "\\d{4}";
 		if (!firstHeaderValue.matches(regex)) {
-			System.out.print("testGetEPSPeriodHeader_firstAnnualHeader_isYear: ");
+			System.out.print("testGetShareHolderEquityPeriodHeader_firstAnnualHeader_isYear: ");
 			System.out.println("First available year for " + tickerSymbol +" is: "+ firstHeaderValue +" and does not match the regex: " + regex);
 		}
+		System.out.println(firstHeaderValue);
 		assertTrue(firstHeaderValue.matches(regex));
 	}
 	
 	//For EPS, there may not be a number for latest year. 
 	@Test
-	public void testGetFirstShareholderEquityPeriodValue() throws InterruptedException, IOException {
+	public void testGetFirstShareHolderEquityPeriodValue_firstValue_hasNumbers() throws InterruptedException, IOException {
 		Document balanceSheetDocument = Jsoup.connect(balanceSheetUrl).get();
 		Thread.sleep(scrapeDelay);
-		String firstEPSValue = webScraper.getShareholderEquityPeriodValue(incomeDocument,0);
+		String firstShareHolderEquityValue = webScraper.getShareHolderEquityPeriodValue(balanceSheetDocument,0);
 		String regex = "\\d.*";
-		if (!firstEPSValue.matches(regex)) {
-			System.out.print("testGetEPSPeriodValue_firstValue_hasNumbers: ");
-			System.out.println("First available value for " + tickerSymbol +" is: "+ firstEPSValue +" and does not match the regex: " + regex);
+		if (!firstShareHolderEquityValue.matches(regex)) {
+			System.out.print("testGetShareHolderEquityPeriodValue_firstValue_hasNumbers: ");
+			System.out.println("First available value for " + tickerSymbol +" is: "+ firstShareHolderEquityValue +" and does not match the regex: " + regex);
 		}
-		assertTrue(firstEPSValue.matches(regex));
+		System.out.println(firstShareHolderEquityValue);
+		assertTrue(firstShareHolderEquityValue.matches(regex));
 	}
-	**/
 	
 	/** 
 	//Tests the Map (LinkedHashMap) to see if it matches the pattern like {2013=77.65B, 2014=86.73B, 2015=92.97B, 2016=84.7B, 2017=89.4B}. 
