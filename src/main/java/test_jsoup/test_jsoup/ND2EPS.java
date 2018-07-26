@@ -27,7 +27,6 @@ public class ND2EPS extends ND1Revenue {
 	
 	//Gets the EPS values by index, 0 would be oldest period (2013 for years) and 4 would be latest period (2017 for years) at the current year of 2018. The scraper content is an HTML table. 
 	public String getEPSPeriodValue(Document document, int index) throws InterruptedException {
-		System.out.println(document.getElementsByClass("crDataTable").get(1).select("tbody > tr.mainRow").get(15).select("td.valueCell").get(index));
 		Element epsNode = document.getElementsByClass("crDataTable").get(1).select("tbody > tr.mainRow").get(15).select("td.valueCell").get(index);
 		String epsValue = epsNode.text();
 		return epsValue;

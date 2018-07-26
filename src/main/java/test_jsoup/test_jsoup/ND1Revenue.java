@@ -86,7 +86,7 @@ public class ND1Revenue extends NDScraperBase
 		return revenueByQuarters;
 	}
 	
-	/** *************************** **/
+	/** ************************* **/
 	/** ND #1 Revenue Section END **/
-	/** *************************** **/
+	/** ************************* **/
 }

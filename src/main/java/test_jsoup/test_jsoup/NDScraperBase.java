@@ -111,7 +111,7 @@ public class NDScraperBase {
 			return Long.parseLong(money);
 		}
 		//String numericMoney = zeroAppender.toString().replace("B", "").replace("B", "").replace(".", "");
-		String numericMoney = zeroAppender.toString().replaceAll("[BM.]", "");
+		String numericMoney = zeroAppender.toString().replaceAll("[BM.()]", "");
 		long parsedAlphaNumericMoney = Long.parseLong(numericMoney);
 		return parsedAlphaNumericMoney;
 	}

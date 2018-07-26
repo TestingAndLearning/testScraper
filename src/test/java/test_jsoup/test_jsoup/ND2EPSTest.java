@@ -3,11 +3,14 @@ package test_jsoup.test_jsoup;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
+import java.util.Map;
+import java.util.Set;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.junit.Test;
 
+//This class gets the Basic EPS from https://www.marketwatch.com/investing/stock/${tickerSymbol}/financials/income(/quarter)
 public class ND2EPSTest {
 	String tickerSymbol = "MSFT";
 	String mainUrl;
@@ -53,6 +56,50 @@ public class ND2EPSTest {
 			System.out.println("First available value for " + tickerSymbol +" is: "+ firstEPSValue +" and does not match the regex: " + regex);
 		}
 		assertTrue(firstEPSValue.matches(regex));
+	}
+	
+	//Tests the Map (LinkedHashMap) to see if it matches the pattern like {2013=77.65B, 2014=86.73B, 2015=92.97B, 2016=84.7B, 2017=89.4B}. 
+	@Test
+	public void testGetEPSByYears() throws NumberFormatException, IOException, InterruptedException {
+		Map<String, String> epsByYears = webScraper.getEPSByYears();
+		Set<String> keys = epsByYears.keySet();
+		boolean matchesPattern = true;
+		for(String k:keys) {
+			if (!k.matches("\\d{4}")) {
+				System.out.print("testGetEPSByYears: ");
+				System.out.println("Key pattern: \"" + k + "\" does not match pattern for Year \"\\d{4}\"");
+				matchesPattern = false;
+			}
+			if (!epsByYears.get(k).matches("\\d.*")) {
+				System.out.print("testGetEPSByYears: ");
+				System.out.println("Key: " + "\"" + k + "\" value's pattern: \"" + epsByYears.get(k) + "\" does not match pattern for EPS \"\\d.*\"");
+				matchesPattern = false;
+			}
+		}
+		System.out.println(epsByYears);
+		assertTrue(matchesPattern);
+	}
+	
+	//Tests the Map (LinkedHashMap) to see if it matches the pattern like {2017-Q2=23.18B, 2017-Q3=24.43B, 2017-Q4=28.9B, 2018-Q1=26.81B, 2018-Q2=30.09B}. 
+	@Test
+	public void testGetEPSByQuarters() throws NumberFormatException, IOException, InterruptedException {
+		Map<String, String> epsByQuarters = webScraper.getEPSByQuarters();
+		Set<String> keys = epsByQuarters.keySet();
+		boolean matchesPattern = true;
+		for(String k:keys) {
+			if (!k.matches("\\d{4}[-][A-Z][\\d]")) {
+				System.out.print("testGetEPSByQuarters: ");
+				System.out.println("Key pattern: \"" + k + "\" does not match pattern for Year \"\\d{4}[-][A-Z][\\d]\"");
+				matchesPattern = false;
+			}
+			if (!epsByQuarters.get(k).matches("\\d.*")) {
+				System.out.print("testGetEPSByQuarters: ");
+				System.out.println("Key: " + "\"" + k + "\" value's pattern: \"" + epsByQuarters.get(k) + "\" does not match pattern for EPS \"\\d.*\"");
+				matchesPattern = false;
+			}
+		}
+		System.out.println(epsByQuarters);
+		assertTrue(matchesPattern);
 	}
 
 }
