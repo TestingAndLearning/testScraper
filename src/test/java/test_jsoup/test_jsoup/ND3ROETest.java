@@ -11,31 +11,66 @@ import org.jsoup.nodes.Document;
 import org.junit.Test;
 
 //This class gets the Basic EPS from https://www.marketwatch.com/investing/stock/${tickerSymbol}/financials/income(/quarter)
-public class ND2EPSTest {
+public class ND3ROETest {
 	String tickerSymbol = "MSFT";
-	String mainUrl;
-	String incomeUrl;
-	String incomeQuarterUrl;
-	String balanceUrl;
-	String cashUrl;
+	String mainUrl; //https://www.marketwatch.com/investing/stock/${tickerSymbol}
+	String incomeUrl; //https://www.marketwatch.com/investing/stock/${tickerSymbol}/financials
+	String incomeQuarterUrl; //https://www.marketwatch.com/investing/stock/${tickerSymbol}/financials/income/quarter
+	String balanceSheetUrl; //https://www.marketwatch.com/investing/stock/${tickerSymbol}/financials/balance-sheet
+	String balanceSheetQuarterUrl; //https://www.marketwatch.com/investing/stock/${tickerSymbol}/financials/balance-sheet/quarter
+	String cashflowUrl; //https://www.marketwatch.com/investing/stock/${tickerSymbol}/financials/cash-flow
+	String cashflowQuarterUrl; //https://www.marketwatch.com/investing/stock/${tickerSymbol}/financials/cash-flow/quarter
 	
-	ND2EPS webScraper = new ND2EPS("MSFT");
+	
+	ND3ROE webScraper = new ND3ROE("MSFT");
 	int scrapeDelay = 500;
 	
-	public ND2EPSTest () throws IOException, InterruptedException {
+	public ND3ROETest () throws IOException, InterruptedException {
 		mainUrl = "https://www.marketwatch.com/investing/stock/" + tickerSymbol;
 		incomeUrl = mainUrl + "/financials";
-		incomeQuarterUrl = incomeUrl+"/income/quarter";
-		balanceUrl = mainUrl + "/balance-sheet";
-		cashUrl = mainUrl + "/cash-flow";
+		incomeQuarterUrl = incomeUrl + "/income/quarter";
+		balanceSheetUrl = mainUrl + "/balance-sheet";
+		balanceSheetQuarterUrl = balanceSheetUrl + "/quarter";
+		cashflowUrl = mainUrl + "/cash-flow";
+		cashflowQuarterUrl = cashflowUrl + "/quarter";
 	}
 
 	//Tests if the site is still following the same HTML layout. Header should be a four digit number like 2013. If stock is new, this is okay to fail. 
 	@Test
-	public void testGetFirstEPSPeriodHeader() throws InterruptedException, IOException {
+	public void testGetFirstNetIncomePeriodHeader() throws InterruptedException, IOException {
 		Document incomeDocument = Jsoup.connect(incomeUrl).get();
 		Thread.sleep(scrapeDelay);
-		String firstHeaderValue = webScraper.getEPSPeriodHeader(incomeDocument, 0);
+		String firstHeaderValue = webScraper.getNetIncomePeriodHeader(incomeDocument, 0);
+		String regex = "\\d{4}";
+		if (!firstHeaderValue.matches(regex)) {
+			System.out.print("testGetNetIncomePeriodHeader_firstAnnualHeader_isYear: ");
+			System.out.println("First available year for " + tickerSymbol +" is: "+ firstHeaderValue +" and does not match the regex: " + regex);
+		}
+		System.out.println(firstHeaderValue);
+		assertTrue(firstHeaderValue.matches(regex));
+	}
+	
+	@Test
+	public void testGetFirstNetIncomePeriodValue() throws InterruptedException, IOException {
+		Document incomeDocument = Jsoup.connect(incomeUrl).get();
+		Thread.sleep(scrapeDelay);
+		String firstNetIncomeValue = webScraper.getNetIncomePeriodValue(incomeDocument,0);
+		String regex = "\\d.*";
+		if (!firstNetIncomeValue.matches(regex)) {
+			System.out.print("testGetNetIncomePeriodValue_firstValue_hasNumbers: ");
+			System.out.println("First available value for " + tickerSymbol +" is: "+ firstNetIncomeValue +" and does not match the regex: " + regex);
+		}
+		System.out.println(firstNetIncomeValue);
+		assertTrue(firstNetIncomeValue.matches(regex));
+	}
+	
+	/**
+	//Tests if the site is still following the same HTML layout. Header should be a four digit number like 2013. If stock is new, this is okay to fail. 
+	@Test
+	public void testGetFirstShareholderEquityPeriodHeader() throws InterruptedException, IOException {
+		Document balanceSheetDocument = Jsoup.connect(balanceSheetUrl).get();
+		Thread.sleep(scrapeDelay);
+		String firstHeaderValue = webScraper.getShareholderEquityPeriodHeader(incomeDocument, 0);
 		String regex = "\\d{4}";
 		if (!firstHeaderValue.matches(regex)) {
 			System.out.print("testGetEPSPeriodHeader_firstAnnualHeader_isYear: ");
@@ -46,10 +81,10 @@ public class ND2EPSTest {
 	
 	//For EPS, there may not be a number for latest year. 
 	@Test
-	public void testGetFirstEPSPeriodValue() throws InterruptedException, IOException {
-		Document incomeDocument = Jsoup.connect(incomeUrl).get();
+	public void testGetFirstShareholderEquityPeriodValue() throws InterruptedException, IOException {
+		Document balanceSheetDocument = Jsoup.connect(balanceSheetUrl).get();
 		Thread.sleep(scrapeDelay);
-		String firstEPSValue = webScraper.getEPSPeriodValue(incomeDocument,0);
+		String firstEPSValue = webScraper.getShareholderEquityPeriodValue(incomeDocument,0);
 		String regex = "\\d.*";
 		if (!firstEPSValue.matches(regex)) {
 			System.out.print("testGetEPSPeriodValue_firstValue_hasNumbers: ");
@@ -57,7 +92,9 @@ public class ND2EPSTest {
 		}
 		assertTrue(firstEPSValue.matches(regex));
 	}
+	**/
 	
+	/** 
 	//Tests the Map (LinkedHashMap) to see if it matches the pattern like {2013=77.65B, 2014=86.73B, 2015=92.97B, 2016=84.7B, 2017=89.4B}. 
 	@Test
 	public void testGetEPSByYears() throws NumberFormatException, IOException, InterruptedException {
@@ -99,5 +136,6 @@ public class ND2EPSTest {
 		}
 		assertTrue(matchesPattern);
 	}
+	**/
 
 }
