@@ -95,8 +95,6 @@ public class ND0Calculator {
 						
 						String unParsedLatestPeriodEPS = epsByPeriod.get(allQuarters.get(allQuarters.size() - 1));
 						String unParsedSecondLatestPeriodEPS = epsByPeriod.get(allQuarters.get(allQuarters.size() - 2));
-						System.out.println(unParsedLatestPeriodEPS);
-						System.out.println(unParsedSecondLatestPeriodEPS);
 						
 						Double latestPeriodEPS = Double.parseDouble(unParsedLatestPeriodEPS);
 						Double secondLatestPeriodEPS = Double.parseDouble(unParsedSecondLatestPeriodEPS);
