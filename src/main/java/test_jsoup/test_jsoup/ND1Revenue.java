@@ -33,7 +33,7 @@ public class ND1Revenue extends NDScraperBase
 	//Gets the revenue values by index, 0 would be oldest period (2013 for years) and 4 would be latest period (2017 for years) at the current year of 2018. The scraper content is an HTML table. 
 	public String getRevenuePeriodValue(Document document, int index) throws InterruptedException {
 		Element revenueNode = document.getElementsByClass("partialSum").get(0).select("td.valueCell").get(index);
-		String revenueValue = revenueNode.text();
+		String revenueValue = revenueNode.text().replaceAll("[()]", "");
 		return revenueValue;
 	}
 	
