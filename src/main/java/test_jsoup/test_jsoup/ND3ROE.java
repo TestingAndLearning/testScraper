@@ -53,8 +53,9 @@ public class ND3ROE extends ND1Revenue {
 		String shareHolderEquityValue = shareHolderEquityNode.text().replaceAll("[()]", ""); //Sometimes values will have brackets like "(0.08)". 
 		return shareHolderEquityValue;
 	}
+	/** Total Shareholder's Equity End. **/
 	
-	//Returns a map of data like so: { "2015"="12.21", "2016"="22.24", "2017"="22.22" }.
+	//Returns a map of data like so: { "2015"="12.21", "2016"="22.24", "2017"="22.22" } with values representing percent. 
 	public Map<String, String> getROEByYears() throws IOException, InterruptedException {
 		Map<String, String> roeByYears = new LinkedHashMap<String, String>();
 
@@ -75,7 +76,16 @@ public class ND3ROE extends ND1Revenue {
 				Double rawNetIncomeValue = (double)getParsedAlphaNumericMoney(netIncomeValue);
 				Double rawShareHolderEquityValue = (double)getParsedAlphaNumericMoney(shareHolderEquityValue);
 				String rawROEValue = Double.toString(rawNetIncomeValue/rawShareHolderEquityValue*100);
-				String roeValue = rawROEValue.substring(0,5);
+				String roeValue;
+				
+				//Convert to only use decimal of last digit. 
+				if (rawROEValue.contains(".")) {
+					int decimalIndex = rawROEValue.indexOf(".");
+					roeValue = rawROEValue.substring(0,decimalIndex+3);
+				} else {
+					roeValue = rawROEValue.substring(0,5);
+				}
+
 				roeByYears.put(netIncomeYearValue, roeValue);
 			}
 		}
@@ -126,15 +136,21 @@ public class ND3ROE extends ND1Revenue {
 					Double rawNetIncomeValue = (double)getParsedAlphaNumericMoney(netIncomeValue);
 					Double rawShareHolderEquityValue = (double)getParsedAlphaNumericMoney(shareHolderEquityValue);
 					String rawROEValue = Double.toString(rawNetIncomeValue/rawShareHolderEquityValue*100);
-					String roeValue = rawROEValue.substring(0,5);
+					String roeValue;
+					
+					//Convert to only use decimal of last digit. 
+					if (rawROEValue.contains(".")) {
+						int decimalIndex = rawROEValue.indexOf(".");
+						roeValue = rawROEValue.substring(0,decimalIndex+3);
+					} else {
+						roeValue = rawROEValue.substring(0,5);
+					}
 					roeByQuarters.put(parsedQuarterValue, roeValue);
 				}
 			}
 		}
 		return roeByQuarters;
 	}
-
-	/** Total Shareholder's Equity End. **/
 	
 	/** ********************* **/
 	/** ND #3 ROE Section END **/

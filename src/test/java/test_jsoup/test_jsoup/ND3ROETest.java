@@ -112,26 +112,24 @@ public class ND3ROETest {
 		assertTrue(matchesPattern);
 	}
 	
-	/**
 	//Tests the Map (LinkedHashMap) to see if it matches the pattern like {2017-Q2=23.18B, 2017-Q3=24.43B, 2017-Q4=28.9B, 2018-Q1=26.81B, 2018-Q2=30.09B}. 
 	@Test
-	public void testGetEPSByQuarters() throws NumberFormatException, IOException, InterruptedException {
-		Map<String, String> epsByQuarters = webScraper.getEPSByQuarters();
-		Set<String> keys = epsByQuarters.keySet();
+	public void testGetROEByQuarters() throws NumberFormatException, IOException, InterruptedException {
+		Map<String, String> roeByQuarters = webScraper.getROEByQuarters();
+		Set<String> keys = roeByQuarters.keySet();
 		boolean matchesPattern = true;
 		for(String k:keys) {
 			if (!k.matches("\\d{4}[-][A-Z][\\d]")) {
-				System.out.print("testGetEPSByQuarters: ");
+				System.out.print("testGetROEByQuarters: ");
 				System.out.println("Key pattern: \"" + k + "\" does not match pattern for Year \"\\d{4}[-][A-Z][\\d]\"");
 				matchesPattern = false;
 			}
-			if (!epsByQuarters.get(k).matches("\\d.*")) {
-				System.out.print("testGetEPSByQuarters: ");
-				System.out.println("Key: " + "\"" + k + "\" value's pattern: \"" + epsByQuarters.get(k) + "\" does not match pattern for EPS \"\\d.*\"");
+			if (!roeByQuarters.get(k).matches("\\d.*")) {
+				System.out.print("testGetROEByQuarters: ");
+				System.out.println("Key: " + "\"" + k + "\" value's pattern: \"" + roeByQuarters.get(k) + "\" does not match pattern for ROE \"\\d.*\"");
 				matchesPattern = false;
 			}
 		}
 		assertTrue(matchesPattern);
 	}
-	**/
 }
