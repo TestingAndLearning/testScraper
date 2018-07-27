@@ -8,7 +8,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-public class ND3ROE extends ND1Revenue {
+public class ND3ROE extends ND2EPS {
 
 	//This class get the Return On Equity percent value by getting the Net Income divided by the Total Shareholder's Equity. 
 	public ND3ROE(String tickerSymbol) throws IOException, InterruptedException {
@@ -138,7 +138,7 @@ public class ND3ROE extends ND1Revenue {
 					String rawROEValue = Double.toString(rawNetIncomeValue/rawShareHolderEquityValue*100);
 					String roeValue;
 					
-					//Convert to only use decimal of last digit. 
+					//Convert to only use decimal of last 2 digits. 
 					if (rawROEValue.contains(".")) {
 						int decimalIndex = rawROEValue.indexOf(".");
 						roeValue = rawROEValue.substring(0,decimalIndex+3);

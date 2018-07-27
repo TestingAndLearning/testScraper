@@ -116,6 +116,27 @@ public class NDScraperBase {
 		return parsedAlphaNumericMoney;
 	}
 	
+	//Convert to only use decimal of last few digits. 
+	public Double useDecimalPlaces(Double rawValue, int decimalSpaces) {
+		//Prevent issues with digits too low. 
+		if (rawValue.toString().length() < 5) {
+			rawValue = rawValue *10000;
+		}
+		
+		String rawValueText = rawValue.toString();
+		Double convertedValue = null;
+		
+		if (rawValueText.contains(".")) {
+			int decimalIndex = rawValueText.indexOf(".");
+			convertedValue = Double.parseDouble(rawValueText.substring(0,decimalIndex+decimalSpaces+1));
+		} else {
+			System.out.println("No decimal detected in :" + rawValueText + "Truncating to " + decimalSpaces + " digits: " + convertedValue);
+			convertedValue = Double.parseDouble(rawValueText.substring(0,decimalSpaces+1));
+		}
+		return convertedValue;
+	}
+
+	
 	/** ******** **/
 	/** 000B_End **/
 	/** ******** **/

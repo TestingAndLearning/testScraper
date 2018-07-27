@@ -30,9 +30,13 @@ public class App {
     		//nd2EPS.getEPSPeriodHeader(incomeDocument, 0);
     		//nd2EPS.getEPSPeriodValue(incomeDocument, 0);
     	
-    		ND3ROE nd3ROE = new ND3ROE("MSFT");
-    		System.out.println(nd3ROE.getROEByYears());
-    		System.out.println(nd3ROE.getROEByQuarters());
+    		//ND3ROE nd3ROE = new ND3ROE("MSFT");
+    		//System.out.println(nd3ROE.getROEByYears());
+    		//System.out.println(nd3ROE.getROEByQuarters());
+    		
+    		ND0Calculator ndCalc = new ND0Calculator("SNAP");
+    		ndCalc.revenuePercentIncrease(Period.YEAR);
+    		ndCalc.revenuePercentIncrease(Period.QUARTER);
     		
     		//ND0Calculator ndCalc = new ND0Calculator("AMD");
     		//System.out.println(ndCalc.hasIncreasingEPS(Period.YEAR));
