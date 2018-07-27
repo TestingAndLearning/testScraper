@@ -63,9 +63,7 @@ public class ND0Calculator {
 				
 				/** ************ **/
 				/** Start: 2 EPS **/
-				/** ************ 
-				 * @throws InterruptedException 
-				 * @throws IOException **/
+				/** ************ **/
 				
 				//For YEAR, compares only the latest complete fiscal year and the year before that. 
 				//For QUARTER, compares only latest complete quarter and the quarter before that. 

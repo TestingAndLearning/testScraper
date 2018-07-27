@@ -44,7 +44,7 @@ public class ND1Revenue extends NDScraperBase
 		for (int i = 0; i < 5; i++) {
 			String yearValue = getRevenuePeriodHeader(incomeDocument, i);
 			String revenueValue = getRevenuePeriodValue(incomeDocument, i);
-			if (!yearValue.isEmpty()) {
+			if (!yearValue.isEmpty() && !revenueValue.isEmpty()) {
 				revenueByYears.put(yearValue, revenueValue);
 			}
 		}

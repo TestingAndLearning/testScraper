@@ -12,7 +12,7 @@ import org.junit.Test;
     ND0CalculatorTest.class,
     ND1RevenueTest.class,
     ND2EPSTest.class,
-    NDScraperBaseTest.class
+    ND3ROETest.class
 })
 
 public class NDAllTests {

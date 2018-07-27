@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
@@ -12,7 +13,10 @@ public class ND3ROE extends ND1Revenue {
 	//This class get the Return On Equity percent value by getting the Net Income divided by the Total Shareholder's Equity. 
 	public ND3ROE(String tickerSymbol) throws IOException, InterruptedException {
 		super(tickerSymbol);
-		
+		balanceSheetDocument = Jsoup.connect(balanceSheetUrl).get();
+		Thread.sleep(scrapeDelay);
+		balanceSheetQuarterDocument = Jsoup.connect(balanceSheetQuarterUrl).get();
+		Thread.sleep(scrapeDelay);
 	}
 	
 	/** *********************** **/
@@ -50,8 +54,34 @@ public class ND3ROE extends ND1Revenue {
 		return shareHolderEquityValue;
 	}
 	
-	//Net income is in https://www.marketwatch.com/investing/stock/msft/financials
-	//Shareholder Equity is in https://www.marketwatch.com/investing/stock/msft/financials/balance-sheet
+	//Returns a map of data like so: { "2015"="12.21", "2016"="22.24", "2017"="22.22" }.
+	public Map<String, String> getROEByYears() throws IOException, InterruptedException {
+		Map<String, String> roeByYears = new LinkedHashMap<String, String>();
+
+		for (int i = 0; i < 5; i++) {
+			String netIncomeYearValue = getNetIncomePeriodHeader(incomeDocument, i);
+			String shareHolderEquityYearValue = getShareHolderEquityPeriodHeader(balanceSheetDocument, i);
+			
+			String netIncomeValue = getNetIncomePeriodValue(incomeDocument, i);
+			String shareHolderEquityValue = getShareHolderEquityPeriodValue(balanceSheetDocument, i);
+			
+			if (!netIncomeYearValue.equals(shareHolderEquityYearValue)) {
+				System.out.println("["+tickerSymbol+"]: Cannot convert to Map, years for Net Income and Share Holder Equity are different. ");
+				return null;
+			}
+			
+			//If all fields are available, divide Net Income by Share Holder Equity to get Return On Equity ratio. Then multiple by 100 and use only 4 digits to get the percent. Output should be something like 23.45. 
+			if (netIncomeValue.matches("\\d.*") && shareHolderEquityValue.matches("\\d.*") && !netIncomeYearValue.isEmpty()) {
+				Double rawNetIncomeValue = (double)getParsedAlphaNumericMoney(netIncomeValue);
+				Double rawShareHolderEquityValue = (double)getParsedAlphaNumericMoney(shareHolderEquityValue);
+				String rawROEValue = Double.toString(rawNetIncomeValue/rawShareHolderEquityValue*100);
+				String roeValue = rawROEValue.substring(0,5);
+				roeByYears.put(netIncomeYearValue, roeValue);
+			}
+		}
+		System.out.println(roeByYears);
+		return roeByYears;
+	}
 	
 	public Double getReturnOnEquityRatio() {
 		

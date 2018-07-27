@@ -29,9 +29,12 @@ public class App {
     		//Document incomeDocument = Jsoup.connect("https://www.marketwatch.com/investing/stock/MSFT/financials").get();
     		//nd2EPS.getEPSPeriodHeader(incomeDocument, 0);
     		//nd2EPS.getEPSPeriodValue(incomeDocument, 0);
+    	
+    		ND3ROE nd3ROE = new ND3ROE("MSFT");
+    		nd3ROE.getROEByYears();
     		
-    		ND0Calculator ndCalc = new ND0Calculator("AMD");
-    		System.out.println(ndCalc.hasIncreasingEPS(Period.YEAR));
-    		System.out.println(ndCalc.hasIncreasingEPS(Period.QUARTER)); 
+    		///ND0Calculator ndCalc = new ND0Calculator("AMD");
+    		//System.out.println(ndCalc.hasIncreasingEPS(Period.YEAR));
+    		//System.out.println(ndCalc.hasIncreasingEPS(Period.QUARTER)); 
     }
 }

@@ -73,7 +73,6 @@ public class ND3ROETest {
 			System.out.print("testGetShareHolderEquityPeriodHeader_firstAnnualHeader_isYear: ");
 			System.out.println("First available year for " + tickerSymbol +" is: "+ firstHeaderValue +" and does not match the regex: " + regex);
 		}
-		System.out.println(firstHeaderValue);
 		assertTrue(firstHeaderValue.matches(regex));
 	}
 	
@@ -88,16 +87,15 @@ public class ND3ROETest {
 			System.out.print("testGetShareHolderEquityPeriodValue_firstValue_hasNumbers: ");
 			System.out.println("First available value for " + tickerSymbol +" is: "+ firstShareHolderEquityValue +" and does not match the regex: " + regex);
 		}
-		System.out.println(firstShareHolderEquityValue);
 		assertTrue(firstShareHolderEquityValue.matches(regex));
 	}
 	
-	/** 
+	
 	//Tests the Map (LinkedHashMap) to see if it matches the pattern like {2013=77.65B, 2014=86.73B, 2015=92.97B, 2016=84.7B, 2017=89.4B}. 
 	@Test
-	public void testGetEPSByYears() throws NumberFormatException, IOException, InterruptedException {
-		Map<String, String> epsByYears = webScraper.getEPSByYears();
-		Set<String> keys = epsByYears.keySet();
+	public void testGetROEByYears() throws NumberFormatException, IOException, InterruptedException {
+		Map<String, String> roeByYears = webScraper.getROEByYears();
+		Set<String> keys = roeByYears.keySet();
 		boolean matchesPattern = true;
 		for(String k:keys) {
 			if (!k.matches("\\d{4}")) {
@@ -105,15 +103,16 @@ public class ND3ROETest {
 				System.out.println("Key pattern: \"" + k + "\" does not match pattern for Year \"\\d{4}\"");
 				matchesPattern = false;
 			}
-			if (!epsByYears.get(k).matches("\\d.*")) {
+			if (!roeByYears.get(k).matches("\\d.*")) {
 				System.out.print("testGetEPSByYears: ");
-				System.out.println("Key: " + "\"" + k + "\" value's pattern: \"" + epsByYears.get(k) + "\" does not match pattern for EPS \"\\d.*\"");
+				System.out.println("Key: " + "\"" + k + "\" value's pattern: \"" + roeByYears.get(k) + "\" does not match pattern for EPS \"\\d.*\"");
 				matchesPattern = false;
 			}
 		}
 		assertTrue(matchesPattern);
 	}
 	
+	/**
 	//Tests the Map (LinkedHashMap) to see if it matches the pattern like {2017-Q2=23.18B, 2017-Q3=24.43B, 2017-Q4=28.9B, 2018-Q1=26.81B, 2018-Q2=30.09B}. 
 	@Test
 	public void testGetEPSByQuarters() throws NumberFormatException, IOException, InterruptedException {
@@ -135,5 +134,4 @@ public class ND3ROETest {
 		assertTrue(matchesPattern);
 	}
 	**/
-
 }

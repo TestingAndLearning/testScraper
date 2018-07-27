@@ -34,7 +34,7 @@ public class NDScraperBase {
 	Document incomeDocument;
 	Document incomeQuarterDocument;
 	Document balanceSheetDocument;
-	Document balanceSheetQuarterUrlDocument;
+	Document balanceSheetQuarterDocument;
 	Document cashflowDocument;
 	Document cashflowQuarterDocument;
 	
@@ -46,7 +46,7 @@ public class NDScraperBase {
 		incomeUrl = mainUrl + "/financials";
 		incomeQuarterUrl = incomeUrl + "/income/quarter";
 		
-		balanceSheetUrl = mainUrl + "/balance-sheet";
+		balanceSheetUrl = incomeUrl + "/balance-sheet";
 		balanceSheetQuarterUrl = balanceSheetUrl + "/quarter";
 		
 		cashflowUrl = mainUrl + "/cash-flow";
