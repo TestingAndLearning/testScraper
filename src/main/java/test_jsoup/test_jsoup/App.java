@@ -31,9 +31,10 @@ public class App {
     		//nd2EPS.getEPSPeriodValue(incomeDocument, 0);
     	
     		ND3ROE nd3ROE = new ND3ROE("MSFT");
-    		nd3ROE.getROEByYears();
+    		System.out.println(nd3ROE.getROEByYears());
+    		System.out.println(nd3ROE.getROEByQuarters());
     		
-    		///ND0Calculator ndCalc = new ND0Calculator("AMD");
+    		//ND0Calculator ndCalc = new ND0Calculator("AMD");
     		//System.out.println(ndCalc.hasIncreasingEPS(Period.YEAR));
     		//System.out.println(ndCalc.hasIncreasingEPS(Period.QUARTER)); 
     }

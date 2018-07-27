@@ -79,15 +79,61 @@ public class ND3ROE extends ND1Revenue {
 				roeByYears.put(netIncomeYearValue, roeValue);
 			}
 		}
-		System.out.println(roeByYears);
 		return roeByYears;
 	}
 	
-	public Double getReturnOnEquityRatio() {
+	//Do not use for calculate ROE, use latest COMPLETE year. 
+	public Map<String, String> getROEByQuarters() throws IOException, InterruptedException {
+		Map<String, String> roeByQuarters = new LinkedHashMap<String, String>();
 		
-		return 1.0;
-		
+		for (int i = 0; i < 5; i++) {
+			String netIncomeQuarterValue = getNetIncomePeriodHeader(incomeQuarterDocument, i);
+			String shareHolderEquityQuarterValue = getShareHolderEquityPeriodHeader(balanceSheetQuarterDocument, i);
+			
+			String netIncomeValue = getNetIncomePeriodValue(incomeQuarterDocument, i);
+			String shareHolderEquityValue = getShareHolderEquityPeriodValue(balanceSheetQuarterDocument, i);
+			
+			if (!netIncomeQuarterValue.equals(shareHolderEquityQuarterValue)) {
+				System.out.println("["+tickerSymbol+"]: Cannot convert to Map, quarters for Net Income and Share Holder Equity are different. ");
+				return null;
+			}
+			
+			//Converts the quarter end date from "30-Sep-2016" to "2016-Q3"
+			if (netIncomeValue.matches("\\d.*") && shareHolderEquityValue.matches("\\d.*") && !netIncomeQuarterValue.isEmpty()) {
+				String month = netIncomeQuarterValue.split("-")[1];
+				String year = netIncomeQuarterValue.split("-")[2];
+				StringBuilder parsedQuarterValueBuilder = new StringBuilder();
+				parsedQuarterValueBuilder.append(year+"-Q");
+				
+				switch (month) {
+					case "Mar": parsedQuarterValueBuilder.append("1");
+								break;
+					case "Jun": parsedQuarterValueBuilder.append("2");
+								break;
+					case "Sep": parsedQuarterValueBuilder.append("3");
+								break;
+					case "Dec": parsedQuarterValueBuilder.append("4");
+								break;
+					default: 	parsedQuarterValueBuilder.setLength(0);
+								parsedQuarterValueBuilder.append(netIncomeQuarterValue);
+								System.out.println("["+ tickerSymbol + "]: Cannot convert to Map, unexpected Quarter Month value: " + month);
+								break;
+				}
+				String parsedQuarterValue = parsedQuarterValueBuilder.toString();
+				
+				//If all fields are available, divide Net Income by Share Holder Equity to get Return On Equity ratio. Then multiple by 100 and use only 4 digits to get the percent. Output should be something like 23.45. 
+				if (netIncomeValue.matches("\\d.*") && shareHolderEquityValue.matches("\\d.*") && !netIncomeQuarterValue.isEmpty()) {
+					Double rawNetIncomeValue = (double)getParsedAlphaNumericMoney(netIncomeValue);
+					Double rawShareHolderEquityValue = (double)getParsedAlphaNumericMoney(shareHolderEquityValue);
+					String rawROEValue = Double.toString(rawNetIncomeValue/rawShareHolderEquityValue*100);
+					String roeValue = rawROEValue.substring(0,5);
+					roeByQuarters.put(parsedQuarterValue, roeValue);
+				}
+			}
+		}
+		return roeByQuarters;
 	}
+
 	/** Total Shareholder's Equity End. **/
 	
 	/** ********************* **/
