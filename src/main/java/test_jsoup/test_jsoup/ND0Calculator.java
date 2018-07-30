@@ -57,14 +57,15 @@ public class ND0Calculator {
 					return null;
 				}
 				
+				//Divides latest period by second latest period to get the percent increase/decrease. 
 				Double revenuePercentIncrease(Period period) throws IOException, InterruptedException {
 					Map<String, String> revenueByPeriod = null;
 					
 					switch (period) { 
-						case YEAR: 		revenueByPeriod = webScraper.getRevenueByYears();
-										System.out.println(revenueByPeriod);
+						case YEAR: 		revenueByPeriod = webScraper.getRevenueByYears();	
 										break;
 						case QUARTER: 	revenueByPeriod = webScraper.getRevenueByQuarters();
+										System.out.println(revenueByPeriod);
 										break;
 						default: 		System.out.println("Invalid period entered: " + period);
 										break;
@@ -87,17 +88,25 @@ public class ND0Calculator {
 						Long secondLatestPeriodRevenue = webScraper.getParsedAlphaNumericMoney(unParsedSecondLatestPeriodRevenue);
 						
 						//Would be something like 1.2467 or 0.8550
-						Double unParsedPercentIncrease = webScraper.useDecimalPlaces((double)latestPeriodRevenue/(double)secondLatestPeriodRevenue, 4); 
+						System.out.println("Latest Period is: " + latestPeriodRevenue + ", Second Latest is: " + secondLatestPeriodRevenue);
+						Double unParsedPercentIncrease = webScraper.useDecimalPlaces((double)latestPeriodRevenue/(double)secondLatestPeriodRevenue, 4);
+						System.out.println((double)latestPeriodRevenue + "/" + (double)secondLatestPeriodRevenue + " = " + unParsedPercentIncrease); 
 						
 						if (unParsedPercentIncrease >= 1) {
-							String percentIncreaseText = Double.toString(unParsedPercentIncrease*100).substring(1); //Changes 1.2467 to 24.67. 
-							Double percentIncrease = Double.parseDouble(percentIncreaseText);
+							String percentIncreaseText;
+							if (unParsedPercentIncrease >=2) {
+								percentIncreaseText = Double.toString((unParsedPercentIncrease-1)*100); //Changes 2.24670000 to 124.670000 to represent percent.
+							} else {
+								percentIncreaseText = Double.toString(unParsedPercentIncrease*100).substring(1); //Changes 1.2467 to 24.67. 
+							}
+							Double percentIncrease = webScraper.useDecimalPlaces(Double.parseDouble(percentIncreaseText), 2);
 							System.out.println("Increasing: " + percentIncrease);
 							return percentIncrease;
+							
 						} else if (unParsedPercentIncrease < 1) {
 							Double differenceIncrease = 1 - unParsedPercentIncrease;
-							String percentIncreaseText = Double.toString(differenceIncrease*100).substring(1); //Changes 0.8550 to 14.50
-							Double percentIncrease = Double.parseDouble(percentIncreaseText)*(-1);
+							String percentIncreaseText = Double.toString(differenceIncrease*100); //Changes 0.8550 to 14.5000000...
+							Double percentIncrease = webScraper.useDecimalPlaces(Double.parseDouble(percentIncreaseText)*(-1), 2); //Changes 14.5000000 to 14.50
 							System.out.println("Decreasing: " + percentIncrease);
 							return percentIncrease;
 						}
