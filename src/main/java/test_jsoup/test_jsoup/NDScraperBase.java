@@ -135,6 +135,32 @@ public class NDScraperBase {
 		}
 		return convertedValue;
 	}
+	
+	//Divides latest period by second latest period to get the percent increase/decrease. 
+	public Double convertDifferenceToPercent(Long latestPeriodValue, Long secondLatestPeriodValue) {
+		//Would be something like 1.2467 or 0.8550
+		Double unParsedPercentIncrease = useDecimalPlaces((double)latestPeriodValue/(double)secondLatestPeriodValue, 4);
+		
+		if (unParsedPercentIncrease >= 1) {
+			String percentIncreaseText;
+			if (unParsedPercentIncrease >=2) {
+				percentIncreaseText = Double.toString((unParsedPercentIncrease-1)*100); //Changes 2.24670000 to 124.670000 to represent percent.
+			} else {
+				percentIncreaseText = Double.toString(unParsedPercentIncrease*100).substring(1); //Changes 1.2467 to 24.67. 
+			}
+			Double percentIncrease = useDecimalPlaces(Double.parseDouble(percentIncreaseText), 2);
+			//System.out.println("Increasing: " + percentIncrease);
+			return percentIncrease;
+			
+		} else if (unParsedPercentIncrease < 1) {
+			Double differenceIncrease = 1 - unParsedPercentIncrease;
+			String percentIncreaseText = Double.toString(differenceIncrease*100); //Changes 0.8550 to 14.5000000...
+			Double percentIncrease = useDecimalPlaces(Double.parseDouble(percentIncreaseText)*(-1), 2); //Changes 14.5000000 to 14.50
+			//System.out.println("Decreasing: " + percentIncrease);
+			return percentIncrease;
+		}
+		return null;
+	}
 
 	
 	/** ******** **/

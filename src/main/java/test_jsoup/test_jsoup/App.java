@@ -34,7 +34,7 @@ public class App {
     		//System.out.println(nd3ROE.getROEByYears());
     		//System.out.println(nd3ROE.getROEByQuarters());
     		
-    		ND0Calculator ndCalc = new ND0Calculator("SNAP");
+    		ND0Calculator ndCalc = new ND0Calculator("MSFT");
     		ndCalc.revenuePercentIncrease(Period.YEAR);
     		ndCalc.revenuePercentIncrease(Period.QUARTER);
     		 
