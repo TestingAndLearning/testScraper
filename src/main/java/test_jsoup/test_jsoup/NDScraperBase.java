@@ -155,7 +155,7 @@ public class NDScraperBase {
 		} else if (unParsedPercentIncrease < 1) {
 			Double differenceIncrease = 1 - unParsedPercentIncrease;
 			String percentIncreaseText = Double.toString(differenceIncrease*100); //Changes 0.8550 to 14.5000000...
-			Double percentIncrease = useDecimalPlaces(Double.parseDouble(percentIncreaseText)*(-1), 2); //Changes 14.5000000 to 14.50
+			Double percentIncrease = useDecimalPlaces(Double.parseDouble(percentIncreaseText), 2)*-1; //Changes 14.5000000 to 14.50
 			//System.out.println("Decreasing: " + percentIncrease);
 			return percentIncrease;
 		}
