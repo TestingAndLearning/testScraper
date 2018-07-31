@@ -35,8 +35,8 @@ public class App {
     		//System.out.println(nd3ROE.getROEByQuarters());
     		
     		ND0Calculator ndCalc = new ND0Calculator("MSFT");
-    		ndCalc.revenuePercentIncrease(Period.YEAR);
-    		ndCalc.revenuePercentIncrease(Period.QUARTER);
+    		ndCalc.epsPercentIncrease(Period.YEAR);
+    		ndCalc.epsPercentIncrease(Period.QUARTER);
     		 
     		//ND0Calculator ndCalc = new ND0Calculator("AMD");
     		//System.out.println(ndCalc.hasIncreasingEPS(Period.YEAR));

@@ -141,6 +141,48 @@ public class ND0Calculator {
 					return null;
 				}
 				
+				//Uses function that divides latest period by second latest period to get the percent increase/decrease. 
+				Double epsPercentIncrease(Period period) throws IOException, InterruptedException {
+					Map<String, String> epsByPeriod = null;
+					Double percentIncrease = null;
+					
+					switch (period) { 
+						case YEAR: 		epsByPeriod = webScraper.getEPSByYears();	
+										System.out.println(epsByPeriod);
+										break;
+						case QUARTER: 	epsByPeriod = webScraper.getEPSByQuarters();
+										System.out.println(epsByPeriod);
+										break;
+						default: 		System.out.println("Invalid period entered: " + period);
+										break;
+					}
+
+					Set<String> keys = epsByPeriod.keySet();
+					ArrayList<String> allPeriods = new ArrayList<>();
+					
+					if (keys.size() < 2) {
+						System.out.println("Not Enough " + period + " Data. ");
+						return null;
+					} else {
+						for (String k : keys) {
+							allPeriods.add(k);
+						}
+						
+						String unParsedLatestPeriodEPS = epsByPeriod.get(allPeriods.get(allPeriods.size() - 1));
+						String unParsedSecondLatestPeriodEPS = epsByPeriod.get(allPeriods.get(allPeriods.size() - 2));
+						//Need to parse the alphanumeric values like 999M and 1.01B
+						System.out.println(unParsedLatestPeriodEPS);
+						System.out.println(unParsedSecondLatestPeriodEPS);
+						Double latestPeriodEPS = Double.parseDouble(unParsedLatestPeriodEPS);	
+						Double secondLatestPeriodEPS = Double.parseDouble(unParsedSecondLatestPeriodEPS);
+						System.out.println("Parsed: " + latestPeriodEPS);
+						System.out.println("Parsed: " + secondLatestPeriodEPS);
+						percentIncrease = webScraper.convertDifferenceToPercent(latestPeriodEPS, secondLatestPeriodEPS);
+					}
+					System.out.println(percentIncrease);
+					return percentIncrease;
+				}
+				
 				/** ********** **/
 				/** End: 2 EPS **/
 				/** ********** **/
