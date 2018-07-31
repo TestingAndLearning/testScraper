@@ -10,7 +10,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.junit.Test;
 
-//This class gets the Basic EPS from https://www.marketwatch.com/investing/stock/${tickerSymbol}/financials/income(/quarter)
 public class ND3ROETest {
 	String tickerSymbol = "MSFT";
 	String mainUrl; //https://www.marketwatch.com/investing/stock/${tickerSymbol}

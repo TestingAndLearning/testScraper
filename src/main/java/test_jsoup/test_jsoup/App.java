@@ -34,12 +34,16 @@ public class App {
     		//System.out.println(nd3ROE.getROEByYears());
     		//System.out.println(nd3ROE.getROEByQuarters());
     		
-    		ND0Calculator ndCalc = new ND0Calculator("MSFT");
-    		ndCalc.epsPercentIncrease(Period.YEAR);
-    		ndCalc.epsPercentIncrease(Period.QUARTER);
+    		//ND0Calculator ndCalc = new ND0Calculator("MSFT");
+    		//ndCalc.epsPercentIncrease(Period.YEAR);
+    		//ndCalc.epsPercentIncrease(Period.QUARTER);
     		 
     		//ND0Calculator ndCalc = new ND0Calculator("AMD");
     		//System.out.println(ndCalc.hasIncreasingEPS(Period.YEAR));
     		//System.out.println(ndCalc.hasIncreasingEPS(Period.QUARTER)); 
+    	
+		ND0Calculator ndCalc = new ND0Calculator("AMD");
+		System.out.println(ndCalc.roePercentIncrease(Period.YEAR));
+		System.out.println(ndCalc.roePercentIncrease(Period.QUARTER));
     }
 }

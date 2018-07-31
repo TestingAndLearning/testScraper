@@ -179,4 +179,51 @@ public class ND0Calculator {
 				/** ********** **/
 				/** End: 2 EPS **/
 				/** ********** **/
+				
+				/** ************ **/
+				/** Start: 3 ROE **/
+				/** ************ **/
+				
+				//Uses function that divides latest period by second latest period to get the percent increase/decrease. 
+				Double roePercentIncrease(Period period) throws IOException, InterruptedException {
+					Map<String, String> roeByPeriod = null;
+					Double percentIncrease = null;
+					
+					switch (period) { 
+						case YEAR: 		roeByPeriod = webScraper.getROEByYears();	
+										System.out.println(roeByPeriod);
+										break;
+						case QUARTER: 	roeByPeriod = webScraper.getROEByQuarters();
+										System.out.println(roeByPeriod);
+										break;
+						default: 		System.out.println("Invalid period entered: " + period);
+										break;
+					}
+
+					Set<String> keys = roeByPeriod.keySet();
+					ArrayList<String> allPeriods = new ArrayList<>();
+					
+					if (keys.size() < 2) {
+						System.out.println("Not Enough " + period + " Data. ");
+						return null;
+					} else {
+						for (String k : keys) {
+							allPeriods.add(k);
+						}
+						
+						String unParsedLatestPeriodROE = roeByPeriod.get(allPeriods.get(allPeriods.size() - 1));
+						String unParsedSecondLatestPeriodROE = roeByPeriod.get(allPeriods.get(allPeriods.size() - 2));
+						//Need to parse the alphanumeric values like 999M and 1.01B
+						System.out.println(unParsedLatestPeriodROE);
+						System.out.println(unParsedSecondLatestPeriodROE);
+						Double latestPeriodROE = Double.parseDouble(unParsedLatestPeriodROE);	
+						Double secondLatestPeriodROE = Double.parseDouble(unParsedSecondLatestPeriodROE);
+						percentIncrease = webScraper.convertDifferenceToPercent(latestPeriodROE, secondLatestPeriodROE);
+					}
+					return percentIncrease;
+				}
+				
+				/** ********** **/
+				/** End: 3 ROE **/
+				/** ********** **/
 }

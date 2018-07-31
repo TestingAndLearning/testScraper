@@ -10,7 +10,7 @@ import org.jsoup.nodes.Element;
 
 public class ND3ROE extends ND2EPS {
 
-	//This class get the Return On Equity percent value by getting the Net Income divided by the Total Shareholder's Equity. 
+	//This class gets the Return On Equity percent value by getting the Net Income divided by the Total Shareholder's Equity. 
 	public ND3ROE(String tickerSymbol) throws IOException, InterruptedException {
 		super(tickerSymbol);
 		balanceSheetDocument = Jsoup.connect(balanceSheetUrl).get();
@@ -92,7 +92,7 @@ public class ND3ROE extends ND2EPS {
 		return roeByYears;
 	}
 	
-	//Do not use for calculate ROE, use latest COMPLETE year. 
+	//Do not use for calculating ROE, use latest COMPLETE year. Keeping function incase I need it as an indicator in the future. 
 	public Map<String, String> getROEByQuarters() throws IOException, InterruptedException {
 		Map<String, String> roeByQuarters = new LinkedHashMap<String, String>();
 		
