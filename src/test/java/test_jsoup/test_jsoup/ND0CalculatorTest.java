@@ -34,26 +34,6 @@ public class ND0CalculatorTest {
 	/** hasIncreasingRevenue End: **/
 	/** ******************************* **/
 	
-	/** *********************** **/
-	/** hasIncreasingEPS Start: **/
-	/** *********************** **/
-	
-	@Test
-	public void testHasIncreasingEPS_yearShouldNotBeNull() throws IOException, InterruptedException {
-		boolean shouldNotBeNull = ndCalc.hasIncreasingEPS(Period.YEAR);
-		assertNotNull(shouldNotBeNull);
-	}
-	
-	@Test
-	public void testHasIncreasingEPS_quarterShouldNotBeNull() throws IOException, InterruptedException {
-		boolean shouldNotBeNull = ndCalc.hasIncreasingEPS(Period.QUARTER);
-		assertNotNull(shouldNotBeNull);
-	}
-	
-	/** ********************* **/
-	/** hasIncreasingEPS End: **/
-	/** ********************* **/
-	
 	/** ***************************** **/
 	/** revenuePercentIncrease Start: **/
 	/** ***************************** **/
@@ -82,4 +62,55 @@ public class ND0CalculatorTest {
 	/** *************************** **/
 	/** revenuePercentIncrease End: **/
 	/** *************************** **/
+	
+	/** *********************** **/
+	/** hasIncreasingEPS Start: **/
+	/** *********************** **/
+	
+	@Test
+	public void testHasIncreasingEPS_yearShouldNotBeNull() throws IOException, InterruptedException {
+		boolean shouldNotBeNull = ndCalc.hasIncreasingEPS(Period.YEAR);
+		assertNotNull(shouldNotBeNull);
+	}
+	
+	@Test
+	public void testHasIncreasingEPS_quarterShouldNotBeNull() throws IOException, InterruptedException {
+		boolean shouldNotBeNull = ndCalc.hasIncreasingEPS(Period.QUARTER);
+		assertNotNull(shouldNotBeNull);
+	}
+	
+	/** ********************* **/
+	/** hasIncreasingEPS End: **/
+	/** ********************* **/
+	
+	/** ************************* **/
+	/** epsPercentIncrease Start: **/
+	/** ************************* **/
+	@Test
+	public void testEPSPercentIncrease_year() throws IOException, InterruptedException {
+		Double percentIncrease = ndCalc.epsPercentIncrease(Period.YEAR);
+		String regex = ".*\\d.*";
+		if (!percentIncrease.toString().matches(regex)) {
+			System.out.print("testEPSPercentIncrease_year: ");
+			System.out.println("EPS increase/decrease percent for " + tickerSymbol +" is: "+ percentIncrease +" and does not match the regex: " + regex);
+		}
+		assertTrue(percentIncrease.toString().matches(regex));
+	}
+	
+	@Test
+	public void testEPSPercentIncrease_quarter() throws IOException, InterruptedException {
+		Double percentIncrease = ndCalc.epsPercentIncrease(Period.QUARTER);
+		String regex = ".*\\d.*";
+		if (!percentIncrease.toString().matches(regex)) {
+			System.out.print("testEPSPercentIncrease_quarter: ");
+			System.out.println("EPS increase/decrease percent for " + tickerSymbol +" is: "+ percentIncrease +" and does not match the regex: " + regex);
+		}
+		assertTrue(percentIncrease.toString().matches(regex));
+	}
+	
+	/** *********************** **/
+	/** epsPercentIncrease End: **/
+	/** *********************** **/
+	
+
 }

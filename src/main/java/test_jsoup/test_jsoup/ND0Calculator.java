@@ -148,10 +148,8 @@ public class ND0Calculator {
 					
 					switch (period) { 
 						case YEAR: 		epsByPeriod = webScraper.getEPSByYears();	
-										System.out.println(epsByPeriod);
 										break;
 						case QUARTER: 	epsByPeriod = webScraper.getEPSByQuarters();
-										System.out.println(epsByPeriod);
 										break;
 						default: 		System.out.println("Invalid period entered: " + period);
 										break;
@@ -171,15 +169,10 @@ public class ND0Calculator {
 						String unParsedLatestPeriodEPS = epsByPeriod.get(allPeriods.get(allPeriods.size() - 1));
 						String unParsedSecondLatestPeriodEPS = epsByPeriod.get(allPeriods.get(allPeriods.size() - 2));
 						//Need to parse the alphanumeric values like 999M and 1.01B
-						System.out.println(unParsedLatestPeriodEPS);
-						System.out.println(unParsedSecondLatestPeriodEPS);
 						Double latestPeriodEPS = Double.parseDouble(unParsedLatestPeriodEPS);	
 						Double secondLatestPeriodEPS = Double.parseDouble(unParsedSecondLatestPeriodEPS);
-						System.out.println("Parsed: " + latestPeriodEPS);
-						System.out.println("Parsed: " + secondLatestPeriodEPS);
 						percentIncrease = webScraper.convertDifferenceToPercent(latestPeriodEPS, secondLatestPeriodEPS);
 					}
-					System.out.println(percentIncrease);
 					return percentIncrease;
 				}
 				
