@@ -97,9 +97,85 @@ public class NDScraperBaseTest extends TestCase {
 	/** getParsedAlphaNumericMoney End: **/
 	/** ******************************* **/
 	
-	public void testUseDecimalPlaces() {
-		
+	/** *********************** **/
+	/** useDecimalPlaces Start: **/
+	/** *********************** **/
+	
+	@Test
+	public void testUseDecimalPlaces_twoDigits_twoSpaces() {
+		Double expectedResult = 12.12;
+		Double rawValue = 12.12353464;
+		int decimalSpaces = 2;
+		Double actualResult = webScraper.useDecimalPlaces(rawValue, decimalSpaces);
+		assertEquals(expectedResult, actualResult);
 	}
+	
+	@Test
+	public void testUseDecimalPlaces_twoDigits_fourSpaces() {
+		Double expectedResult = 12.1235;
+		Double rawValue = 12.12353464;
+		int decimalSpaces = 4;
+		Double actualResult = webScraper.useDecimalPlaces(rawValue, decimalSpaces);
+		assertEquals(expectedResult, actualResult);
+	}
+	
+	@Test
+	public void testUseDecimalPlaces_oneDigit_twoSpaces() {
+		Double expectedResult = 2.12;
+		Double rawValue = 2.12353464;
+		int decimalSpaces = 2;
+		Double actualResult = webScraper.useDecimalPlaces(rawValue, decimalSpaces);
+		assertEquals(expectedResult, actualResult);
+	}
+	
+	@Test
+	public void testUseDecimalPlaces_oneDigit_fourSpaces() {
+		Double expectedResult = 2.1235;
+		Double rawValue = 2.12353464;
+		int decimalSpaces = 4;
+		Double actualResult = webScraper.useDecimalPlaces(rawValue, decimalSpaces);
+		assertEquals(expectedResult, actualResult);
+	}
+	
+	@Test
+	public void testUseDecimalPlaces_twoDigits_twoSpaces_zeroes() {
+		Double expectedResult = 12.1;
+		Double rawValue = 12.10000;
+		int decimalSpaces = 2;
+		Double actualResult = webScraper.useDecimalPlaces(rawValue, decimalSpaces);
+		assertEquals(expectedResult, actualResult);
+	}
+	
+	@Test
+	public void testUseDecimalPlaces_twoDigits_fourSpaces_zeroes() {
+		Double expectedResult = 12.1;
+		Double rawValue = 12.100000000;
+		int decimalSpaces = 4;
+		Double actualResult = webScraper.useDecimalPlaces(rawValue, decimalSpaces);
+		assertEquals(expectedResult, actualResult);
+	}
+	
+	@Test
+	public void testUseDecimalPlaces_oneDigit_twoSpaces_zeroOnlyDecimal() {
+		Double expectedResult = 2.0;
+		Double rawValue = 2.0000000;
+		int decimalSpaces = 2;
+		Double actualResult = webScraper.useDecimalPlaces(rawValue, decimalSpaces);
+		assertEquals(expectedResult, actualResult);
+	}
+	
+	@Test
+	public void testUseDecimalPlaces_twoDigits_fourSpaces_zeroeOnlyDecimal() {
+		Double expectedResult = 12.0;
+		Double rawValue = 12.000000000;
+		int decimalSpaces = 4;
+		Double actualResult = webScraper.useDecimalPlaces(rawValue, decimalSpaces);
+		assertEquals(expectedResult, actualResult);
+	}
+	
+	/** ********************* **/
+	/** useDecimalPlaces End: **/
+	/** ********************* **/
 	
 	/** ********************************* **/
 	/** convertDifferentToPercent: Start  **/

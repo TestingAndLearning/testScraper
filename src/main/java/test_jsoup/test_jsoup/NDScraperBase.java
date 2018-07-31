@@ -116,17 +116,23 @@ public class NDScraperBase {
 		return parsedAlphaNumericMoney;
 	}
 	
-	//Convert to only use decimal of last few digits. 
+	//Convert to only use decimal of last few digits. (Omits 0s at the end though). 
 	public Double useDecimalPlaces(Double rawValue, int decimalSpaces) {
 		//Prevent issues with digits too low. 
-		if (rawValue.toString().length() < 5) {
-			rawValue = rawValue *10000;
-		}
+		//if (rawValue.toString().length() < 5) {
+			//rawValue = rawValue *10000;
+		//}
 		
 		String rawValueText = rawValue.toString();
+		
 		Double convertedValue = null;
 		
 		if (rawValueText.contains(".")) {
+			//Check if sufficient amount of digits after decimal, if it is like 10.1, then next steps may run into outofbounds issues. 
+			if (rawValueText.split("\\.")[1].length() < 5) {
+				rawValueText = rawValueText + "0000";
+			}
+			
 			int decimalIndex = rawValueText.indexOf(".");
 			convertedValue = Double.parseDouble(rawValueText.substring(0,decimalIndex+decimalSpaces+1));
 		} else {
