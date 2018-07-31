@@ -8,7 +8,7 @@ public class ND0CalculatorTest {
 
 	@Test
 	public void testHasIncreasingRevenue() {
-
+		
 	}
 
 }

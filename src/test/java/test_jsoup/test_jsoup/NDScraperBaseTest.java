@@ -53,44 +53,44 @@ public class NDScraperBaseTest extends TestCase {
 	
 	@Test
 	public void testGetParsedAlphaNumericMoneyB() {
-		long result = 11120000000L;
+		long expectedResult = 11120000000L;
 		long parsedNumericMoney = webScraper.getParsedAlphaNumericMoney("11.12B");
-		assertEquals(result, parsedNumericMoney);
+		assertEquals(expectedResult, parsedNumericMoney);
 	}
 	
 	@Test
 	public void testGetParsedAlphaNumericMoneyM() {
-		long result = 311120000L;
+		long expectedResult = 311120000L;
 		long parsedNumericMoney = webScraper.getParsedAlphaNumericMoney("311.12M");
-		assertEquals(result, parsedNumericMoney);
+		assertEquals(expectedResult, parsedNumericMoney);
 	}
 	
 	@Test
 	public void testGetParsedAlphaNumericMoneyNoDecB() {
-		long result = 22000000000L;
+		long expectedResult = 22000000000L;
 		long parsedNumericMoney = webScraper.getParsedAlphaNumericMoney("22B");
-		assertEquals(result, parsedNumericMoney);
+		assertEquals(expectedResult, parsedNumericMoney);
 	}
 	
 	@Test
 	public void testGetParsedAlphaNumericMoneyNoDecM() {
-		long result = 222000000L;
+		long expectedResult = 222000000L;
 		long parsedNumericMoney = webScraper.getParsedAlphaNumericMoney("222M");
-		assertEquals(result, parsedNumericMoney);
+		assertEquals(expectedResult, parsedNumericMoney);
 	}
 	
 	@Test
 	public void testGetParsedAlphaNumericMoneyNoLetter() {
-		Long result = null;
+		Long expectedResult = null;
 		Long parsedNumericMoney = webScraper.getParsedAlphaNumericMoney("11.12");
-		assertEquals(result, parsedNumericMoney);
+		assertEquals(expectedResult, parsedNumericMoney);
 	}
 	
 	@Test
 	public void testGetParsedAlphaNumericMoneyNoLetterNoDec() {
-		Long result = null;
+		Long expectedResult = null;
 		Long parsedNumericMoney = webScraper.getParsedAlphaNumericMoney("311");
-		assertEquals(result, parsedNumericMoney);
+		assertEquals(expectedResult, parsedNumericMoney);
 	}
 	
 	/** ******************************* **/
