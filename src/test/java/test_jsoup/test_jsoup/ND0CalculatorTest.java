@@ -14,26 +14,6 @@ public class ND0CalculatorTest {
 		
 	}
 
-	/** *************************** **/
-	/** hasIncreasingRevenue Start: **/
-	/** *************************** **/
-	
-	@Test
-	public void testHasIncreasingRevenue_yearShouldNotBeNull() throws IOException, InterruptedException {
-		boolean shouldNotBeNull = ndCalc.hasIncreasingRevenue(Period.YEAR);
-		assertNotNull(shouldNotBeNull);
-	}
-	
-	@Test
-	public void testHasIncreasingRevenue_quarterShouldNotBeNull() throws IOException, InterruptedException {
-		boolean shouldNotBeNull = ndCalc.hasIncreasingRevenue(Period.QUARTER);
-		assertNotNull(shouldNotBeNull);
-	}
-	
-	/** ******************************* **/
-	/** hasIncreasingRevenue End: **/
-	/** ******************************* **/
-	
 	/** ***************************** **/
 	/** revenuePercentIncrease Start: **/
 	/** ***************************** **/
@@ -63,25 +43,25 @@ public class ND0CalculatorTest {
 	/** revenuePercentIncrease End: **/
 	/** *************************** **/
 	
-	/** *********************** **/
-	/** hasIncreasingEPS Start: **/
-	/** *********************** **/
+	/** *************************** **/
+	/** hasIncreasingRevenue Start: **/
+	/** *************************** **/
 	
 	@Test
-	public void testHasIncreasingEPS_yearShouldNotBeNull() throws IOException, InterruptedException {
-		boolean shouldNotBeNull = ndCalc.hasIncreasingEPS(Period.YEAR);
+	public void testHasIncreasingRevenue_yearShouldNotBeNull() throws IOException, InterruptedException {
+		boolean shouldNotBeNull = ndCalc.hasIncreasingRevenue(Period.YEAR);
 		assertNotNull(shouldNotBeNull);
 	}
 	
 	@Test
-	public void testHasIncreasingEPS_quarterShouldNotBeNull() throws IOException, InterruptedException {
-		boolean shouldNotBeNull = ndCalc.hasIncreasingEPS(Period.QUARTER);
+	public void testHasIncreasingRevenue_quarterShouldNotBeNull() throws IOException, InterruptedException {
+		boolean shouldNotBeNull = ndCalc.hasIncreasingRevenue(Period.QUARTER);
 		assertNotNull(shouldNotBeNull);
 	}
 	
-	/** ********************* **/
-	/** hasIncreasingEPS End: **/
-	/** ********************* **/
+	/** ******************************* **/
+	/** hasIncreasingRevenue End: **/
+	/** ******************************* **/
 	
 	/** ************************* **/
 	/** epsPercentIncrease Start: **/
@@ -112,5 +92,73 @@ public class ND0CalculatorTest {
 	/** epsPercentIncrease End: **/
 	/** *********************** **/
 	
+	/** *********************** **/
+	/** hasIncreasingEPS Start: **/
+	/** *********************** **/
+	
+	@Test
+	public void testHasIncreasingEPS_yearShouldNotBeNull() throws IOException, InterruptedException {
+		boolean shouldNotBeNull = ndCalc.hasIncreasingEPS(Period.YEAR);
+		assertNotNull(shouldNotBeNull);
+	}
+	
+	@Test
+	public void testHasIncreasingEPS_quarterShouldNotBeNull() throws IOException, InterruptedException {
+		boolean shouldNotBeNull = ndCalc.hasIncreasingEPS(Period.QUARTER);
+		assertNotNull(shouldNotBeNull);
+	}
+	
+	/** ********************* **/
+	/** hasIncreasingEPS End: **/
+	/** ********************* **/
+	
+	/** ************************* **/
+	/** roePercentIncrease Start: **/
+	/** ************************* **/
+	@Test
+	public void testROEPercentIncrease_year() throws IOException, InterruptedException {
+		Double percentIncrease = ndCalc.roePercentIncrease(Period.YEAR);
+		String regex = ".*\\d.*";
+		if (!percentIncrease.toString().matches(regex)) {
+			System.out.print("testROEPercentIncrease_year: ");
+			System.out.println("ROE increase/decrease percent for " + tickerSymbol +" is: "+ percentIncrease +" and does not match the regex: " + regex);
+		}
+		assertTrue(percentIncrease.toString().matches(regex));
+	}
+	
+	@Test
+	public void testROEPercentIncrease_quarter() throws IOException, InterruptedException {
+		Double percentIncrease = ndCalc.roePercentIncrease(Period.QUARTER);
+		String regex = ".*\\d.*";
+		if (!percentIncrease.toString().matches(regex)) {
+			System.out.print("testROEPercentIncrease_quarter: ");
+			System.out.println("ROE increase/decrease percent for " + tickerSymbol +" is: "+ percentIncrease +" and does not match the regex: " + regex);
+		}
+		assertTrue(percentIncrease.toString().matches(regex));
+	}
+	
+	/** *********************** **/
+	/** roePercentIncrease End: **/
+	/** *********************** **/
+	
+	/** *********************** **/
+	/** hasIncreasingROE Start: **/
+	/** *********************** **/
+	
+	@Test
+	public void testHasIncreasingROE_yearShouldNotBeNull() throws IOException, InterruptedException {
+		boolean shouldNotBeNull = ndCalc.hasIncreasingROE(Period.YEAR);
+		assertNotNull(shouldNotBeNull);
+	}
+	
+	@Test
+	public void testHasIncreasingROE_quarterShouldNotBeNull() throws IOException, InterruptedException {
+		boolean shouldNotBeNull = ndCalc.hasIncreasingROE(Period.QUARTER);
+		assertNotNull(shouldNotBeNull);
+	}
+	
+	/** ********************* **/
+	/** hasIncreasingROE End: **/
+	/** ********************* **/
 
 }

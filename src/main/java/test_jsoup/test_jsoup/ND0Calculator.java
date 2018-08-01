@@ -18,6 +18,42 @@ public class ND0Calculator {
 				/** **************** **/
 				/** Start: 1 Revenue **/
 				/** **************** **/
+				
+				//Uses function that divides latest period by second latest period to get the percent increase/decrease. 
+				Double revenuePercentIncrease(Period period) throws IOException, InterruptedException {
+					Map<String, String> revenueByPeriod = null;
+					Double percentIncrease = null;
+					
+					switch (period) { 
+						case YEAR: 		revenueByPeriod = webScraper.getRevenueByYears();	
+										break;
+						case QUARTER: 	revenueByPeriod = webScraper.getRevenueByQuarters();
+										break;
+						default: 		System.out.println("Invalid period entered: " + period);
+										break;
+					}
+
+					Set<String> keys = revenueByPeriod.keySet();
+					ArrayList<String> allPeriods = new ArrayList<>();
+					
+					if (keys.size() < 2) {
+						System.out.println("Not Enough " + period + " Data. ");
+						return null;
+					} else {
+						for (String k : keys) {
+							allPeriods.add(k);
+						}
+						
+						String unParsedLatestPeriodRevenue = revenueByPeriod.get(allPeriods.get(allPeriods.size() - 1));
+						String unParsedSecondLatestPeriodRevenue = revenueByPeriod.get(allPeriods.get(allPeriods.size() - 2));
+						//Need to parse the alphanumeric values like 999M and 1.01B
+						Long latestPeriodRevenue = webScraper.getParsedAlphaNumericMoney(unParsedLatestPeriodRevenue);	
+						Long secondLatestPeriodRevenue = webScraper.getParsedAlphaNumericMoney(unParsedSecondLatestPeriodRevenue);
+						percentIncrease = webScraper.convertDifferenceToPercent(latestPeriodRevenue, secondLatestPeriodRevenue);
+					}
+					return percentIncrease;
+				}
+				
 				//For YEAR, compares only the latest complete fiscal year and the year before that. 
 				//For QUARTER, compares only latest complete quarter and the quarter before that. 
 				public Boolean hasIncreasingRevenue(Period period) throws IOException, InterruptedException {
@@ -57,21 +93,29 @@ public class ND0Calculator {
 					return null;
 				}
 				
+				/** ************** **/
+				/** End: 1 Revenue **/
+				/** ************** **/
+				
+				/** ************ **/
+				/** Start: 2 EPS **/
+				/** ************ **/
+				
 				//Uses function that divides latest period by second latest period to get the percent increase/decrease. 
-				Double revenuePercentIncrease(Period period) throws IOException, InterruptedException {
-					Map<String, String> revenueByPeriod = null;
+				Double epsPercentIncrease(Period period) throws IOException, InterruptedException {
+					Map<String, String> epsByPeriod = null;
 					Double percentIncrease = null;
 					
 					switch (period) { 
-						case YEAR: 		revenueByPeriod = webScraper.getRevenueByYears();	
+						case YEAR: 		epsByPeriod = webScraper.getEPSByYears();	
 										break;
-						case QUARTER: 	revenueByPeriod = webScraper.getRevenueByQuarters();
+						case QUARTER: 	epsByPeriod = webScraper.getEPSByQuarters();
 										break;
 						default: 		System.out.println("Invalid period entered: " + period);
 										break;
 					}
 
-					Set<String> keys = revenueByPeriod.keySet();
+					Set<String> keys = epsByPeriod.keySet();
 					ArrayList<String> allPeriods = new ArrayList<>();
 					
 					if (keys.size() < 2) {
@@ -82,23 +126,15 @@ public class ND0Calculator {
 							allPeriods.add(k);
 						}
 						
-						String unParsedLatestPeriodRevenue = revenueByPeriod.get(allPeriods.get(allPeriods.size() - 1));
-						String unParsedSecondLatestPeriodRevenue = revenueByPeriod.get(allPeriods.get(allPeriods.size() - 2));
+						String unParsedLatestPeriodEPS = epsByPeriod.get(allPeriods.get(allPeriods.size() - 1));
+						String unParsedSecondLatestPeriodEPS = epsByPeriod.get(allPeriods.get(allPeriods.size() - 2));
 						//Need to parse the alphanumeric values like 999M and 1.01B
-						Long latestPeriodRevenue = webScraper.getParsedAlphaNumericMoney(unParsedLatestPeriodRevenue);	
-						Long secondLatestPeriodRevenue = webScraper.getParsedAlphaNumericMoney(unParsedSecondLatestPeriodRevenue);
-						percentIncrease = webScraper.convertDifferenceToPercent(latestPeriodRevenue, secondLatestPeriodRevenue);
+						Double latestPeriodEPS = Double.parseDouble(unParsedLatestPeriodEPS);	
+						Double secondLatestPeriodEPS = Double.parseDouble(unParsedSecondLatestPeriodEPS);
+						percentIncrease = webScraper.convertDifferenceToPercent(latestPeriodEPS, secondLatestPeriodEPS);
 					}
 					return percentIncrease;
 				}
-				
-				/** ************** **/
-				/** End: 1 Revenue **/
-				/** ************** **/
-				
-				/** ************ **/
-				/** Start: 2 EPS **/
-				/** ************ **/
 				
 				//For YEAR, compares only the latest complete fiscal year and the year before that. 
 				//For QUARTER, compares only latest complete quarter and the quarter before that. 
@@ -141,41 +177,6 @@ public class ND0Calculator {
 					return null;
 				}
 				
-				//Uses function that divides latest period by second latest period to get the percent increase/decrease. 
-				Double epsPercentIncrease(Period period) throws IOException, InterruptedException {
-					Map<String, String> epsByPeriod = null;
-					Double percentIncrease = null;
-					
-					switch (period) { 
-						case YEAR: 		epsByPeriod = webScraper.getEPSByYears();	
-										break;
-						case QUARTER: 	epsByPeriod = webScraper.getEPSByQuarters();
-										break;
-						default: 		System.out.println("Invalid period entered: " + period);
-										break;
-					}
-
-					Set<String> keys = epsByPeriod.keySet();
-					ArrayList<String> allPeriods = new ArrayList<>();
-					
-					if (keys.size() < 2) {
-						System.out.println("Not Enough " + period + " Data. ");
-						return null;
-					} else {
-						for (String k : keys) {
-							allPeriods.add(k);
-						}
-						
-						String unParsedLatestPeriodEPS = epsByPeriod.get(allPeriods.get(allPeriods.size() - 1));
-						String unParsedSecondLatestPeriodEPS = epsByPeriod.get(allPeriods.get(allPeriods.size() - 2));
-						//Need to parse the alphanumeric values like 999M and 1.01B
-						Double latestPeriodEPS = Double.parseDouble(unParsedLatestPeriodEPS);	
-						Double secondLatestPeriodEPS = Double.parseDouble(unParsedSecondLatestPeriodEPS);
-						percentIncrease = webScraper.convertDifferenceToPercent(latestPeriodEPS, secondLatestPeriodEPS);
-					}
-					return percentIncrease;
-				}
-				
 				/** ********** **/
 				/** End: 2 EPS **/
 				/** ********** **/
@@ -191,10 +192,8 @@ public class ND0Calculator {
 					
 					switch (period) { 
 						case YEAR: 		roeByPeriod = webScraper.getROEByYears();	
-										System.out.println(roeByPeriod);
 										break;
 						case QUARTER: 	roeByPeriod = webScraper.getROEByQuarters();
-										System.out.println(roeByPeriod);
 										break;
 						default: 		System.out.println("Invalid period entered: " + period);
 										break;
@@ -214,13 +213,21 @@ public class ND0Calculator {
 						String unParsedLatestPeriodROE = roeByPeriod.get(allPeriods.get(allPeriods.size() - 1));
 						String unParsedSecondLatestPeriodROE = roeByPeriod.get(allPeriods.get(allPeriods.size() - 2));
 						//Need to parse the alphanumeric values like 999M and 1.01B
-						System.out.println(unParsedLatestPeriodROE);
-						System.out.println(unParsedSecondLatestPeriodROE);
 						Double latestPeriodROE = Double.parseDouble(unParsedLatestPeriodROE);	
 						Double secondLatestPeriodROE = Double.parseDouble(unParsedSecondLatestPeriodROE);
 						percentIncrease = webScraper.convertDifferenceToPercent(latestPeriodROE, secondLatestPeriodROE);
 					}
 					return percentIncrease;
+				}
+				
+				public Boolean hasIncreasingROE(Period period) throws IOException, InterruptedException {
+					Double percentIncrease = roePercentIncrease(period);
+					if (percentIncrease > 0) {
+						return true;
+					} else if (percentIncrease <= 0) {
+						return false;
+					}
+					return null;
 				}
 				
 				/** ********** **/
