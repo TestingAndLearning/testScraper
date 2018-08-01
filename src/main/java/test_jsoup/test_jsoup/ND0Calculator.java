@@ -8,11 +8,11 @@ import java.util.Set;
 
 public class ND0Calculator {
 				String tickerSymbol;
-				ND3ROE webScraper;
+				ND4AnalystRecommendation webScraper;
 				
 				public ND0Calculator(String tickerSymbol) throws IOException, InterruptedException{
 					this.tickerSymbol = tickerSymbol;
-					webScraper = new ND3ROE(tickerSymbol);
+					webScraper = new ND4AnalystRecommendation(tickerSymbol);
 				}
 				
 				/** **************** **/
@@ -233,4 +233,26 @@ public class ND0Calculator {
 				/** ********** **/
 				/** End: 3 ROE **/
 				/** ********** **/
+				
+				/** ******************************* **/
+				/** Start: 4 Analyst Recommendation **/
+				/** ******************************* **/
+				
+				public String getAnalystRecommendation() {
+					return webScraper.getAnalystRecommendation();
+				}
+				
+				public Boolean analystRecommendationIsPositive() {
+					String analystRecommendation = getAnalystRecommendation();
+					if (analystRecommendation.equals("BUY") || analystRecommendation.equals("OVER")) {
+						return true;
+					} else if (analystRecommendation.equals("SELL") || analystRecommendation.equals("UNDER") || analystRecommendation.equals("HOLD")) {
+						return false;
+					}
+					return null;
+				}
+				
+				/** ***************************** **/
+				/** End: 4 Analyst Recommendation **/
+				/** ***************************** **/
 }

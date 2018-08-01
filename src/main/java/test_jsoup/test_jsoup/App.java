@@ -42,8 +42,11 @@ public class App {
     		//System.out.println(ndCalc.hasIncreasingEPS(Period.YEAR));
     		//System.out.println(ndCalc.hasIncreasingEPS(Period.QUARTER)); 
     	
-		ND0Calculator ndCalc = new ND0Calculator("AMD");
-		System.out.println(ndCalc.roePercentIncrease(Period.YEAR));
-		System.out.println(ndCalc.roePercentIncrease(Period.QUARTER));
+		//ND0Calculator ndCalc = new ND0Calculator("AMD");
+		//System.out.println(ndCalc.roePercentIncrease(Period.YEAR));
+		//System.out.println(ndCalc.roePercentIncrease(Period.QUARTER));
+    	
+    		ND4AnalystRecommendation nd4 = new ND4AnalystRecommendation("MSFT");
+    		System.out.println(nd4.getAnalystRecommendation());
     }
 }
