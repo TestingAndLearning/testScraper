@@ -13,7 +13,7 @@ import org.junit.Test;
     ND1RevenueTest.class,
     ND2EPSTest.class,
     ND3ROETest.class,
-    ND4AnalystRecommendation.class
+    ND4AnalystRecommendationTest.class
 })
 
 public class NDAllTests {
