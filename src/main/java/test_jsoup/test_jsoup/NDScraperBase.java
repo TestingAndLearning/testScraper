@@ -19,6 +19,8 @@ public class NDScraperBase {
 	
 	String tickerSymbol; //MSFT
 	String mainUrl; //https://www.marketwatch.com/investing/stock/${tickerSymbol}
+	String analystUrl; //https://www.marketwatch.com/investing/stock/${tickerSymbol}/analystestimates
+	String profileUrl;
 	
 	String incomeUrl; //https://www.marketwatch.com/investing/stock/${tickerSymbol}/financials
 	String incomeQuarterUrl; //https://www.marketwatch.com/investing/stock/${tickerSymbol}/financials/income/quarter
@@ -29,20 +31,24 @@ public class NDScraperBase {
 	String cashflowUrl; //https://www.marketwatch.com/investing/stock/${tickerSymbol}/financials/cash-flow
 	String cashflowQuarterUrl; //https://www.marketwatch.com/investing/stock/${tickerSymbol}/financials/cash-flow/quarter
 	
+	
 	int scrapeDelay = 500; //Delay in ms between each HTTP action. 
 	Document mainDocument;
+	Document analystDocument;
+	Document profileDocument;
 	Document incomeDocument;
 	Document incomeQuarterDocument;
 	Document balanceSheetDocument;
 	Document balanceSheetQuarterDocument;
 	Document cashflowDocument;
 	Document cashflowQuarterDocument;
-	
 
+	
 	public NDScraperBase(String tickerSymbol) throws IOException, InterruptedException {
 		this.tickerSymbol = tickerSymbol;
 		mainUrl = "https://www.marketwatch.com/investing/stock/" + tickerSymbol;
-		
+		analystUrl = mainUrl + "/analystestimates";
+		profileUrl = mainUrl + "/profile";
 		incomeUrl = mainUrl + "/financials";
 		incomeQuarterUrl = incomeUrl + "/income/quarter";
 		
@@ -53,6 +59,7 @@ public class NDScraperBase {
 		cashflowQuarterUrl = cashflowUrl + "/quarter";
 		
 		mainDocument = Jsoup.connect(mainUrl).get();
+		profileDocument = Jsoup.connect(profileUrl).get();
 		Thread.sleep(scrapeDelay);
 	}
 	
@@ -67,7 +74,7 @@ public class NDScraperBase {
 	
 	//Gets current stock price at the main page. 
 	public String getCurrentPrice() throws IOException {
-		Elements stockPriceElement = mainDocument.select("h3.intraday__price > bg-quote");
+		Element stockPriceElement = profileDocument.getElementsByClass("pricewrap").get(0).getElementsByClass("data").get(0);
 		String elementValue = stockPriceElement.text();
 		return elementValue;
 	}
