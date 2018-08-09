@@ -23,5 +23,16 @@ public class ND11Insider extends ND4AnalystRecommendation {
 		int sharesSoldInLastThreeMonths = Integer.parseInt(insiderTransactionNode.text().replace(",", "")); //Active value may have double quotes around it.  
 		return sharesSoldInLastThreeMonths;
 	}
+	
+	public Boolean hasMoreInsiderBuysThanSells() {
+		int sharesPurchased = getSharesPurchasedInLastThreeMonths();
+		int sharesSold = getSharesSoldInLastThreeMonths();
+		if (sharesPurchased > sharesSold) {
+			return true;
+		} else if (sharesSold > sharesPurchased) {
+			return false; 
+		}
+		return null;
+	}
 
 }
