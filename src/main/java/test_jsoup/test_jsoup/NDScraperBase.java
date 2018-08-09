@@ -20,7 +20,8 @@ public class NDScraperBase {
 	String tickerSymbol; //MSFT
 	String mainUrl; //https://www.marketwatch.com/investing/stock/${tickerSymbol}
 	String analystUrl; //https://www.marketwatch.com/investing/stock/${tickerSymbol}/analystestimates
-	String profileUrl;
+	String profileUrl; //https://www.marketwatch.com/investing/stock/${tickerSymbol}/profile
+	String insiderUrl; //https://www.marketwatch.com/investing/stock/${tickerSymbol}/insideractions
 	
 	String incomeUrl; //https://www.marketwatch.com/investing/stock/${tickerSymbol}/financials
 	String incomeQuarterUrl; //https://www.marketwatch.com/investing/stock/${tickerSymbol}/financials/income/quarter
@@ -36,6 +37,7 @@ public class NDScraperBase {
 	Document mainDocument;
 	Document analystDocument;
 	Document profileDocument;
+	Document insiderDocument;
 	Document incomeDocument;
 	Document incomeQuarterDocument;
 	Document balanceSheetDocument;
@@ -49,6 +51,8 @@ public class NDScraperBase {
 		mainUrl = "https://www.marketwatch.com/investing/stock/" + tickerSymbol;
 		analystUrl = mainUrl + "/analystestimates";
 		profileUrl = mainUrl + "/profile";
+		insiderUrl = mainUrl + "/insideractions";
+		
 		incomeUrl = mainUrl + "/financials";
 		incomeQuarterUrl = incomeUrl + "/income/quarter";
 		

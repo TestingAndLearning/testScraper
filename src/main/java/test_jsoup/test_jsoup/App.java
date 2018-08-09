@@ -46,7 +46,11 @@ public class App {
 		//System.out.println(ndCalc.roePercentIncrease(Period.YEAR));
 		//System.out.println(ndCalc.roePercentIncrease(Period.QUARTER));
     	
-    		ND4AnalystRecommendation nd4 = new ND4AnalystRecommendation("MSFT");
-    		System.out.println(nd4.getAnalystRecommendation());
+    		//ND4AnalystRecommendation nd4 = new ND4AnalystRecommendation("MSFT");
+    		//System.out.println(nd4.getAnalystRecommendation());
+    	
+    		ND11Insider nd11 = new ND11Insider("MSFT");
+    		System.out.println(nd11.getSharesPurchasedInLastThreeMonths());
+    		System.out.println(nd11.getSharesSoldInLastThreeMonths());
     }
 }
