@@ -160,5 +160,19 @@ public class ND0CalculatorTest {
 	/** ********************* **/
 	/** hasIncreasingROE End: **/
 	/** ********************* **/
+	
+	/** ********************************** **/
+	/** hasMoreInsiderBuysThanSells Start: **/
+	/** ********************************** **/
+	
+	@Test
+	public void testHasMoreInsiderBuysThanSells() throws IOException, InterruptedException {
+		boolean shouldNotBeNull = ndCalc.hasMoreInsiderBuysThanSells();
+		assertNotNull(shouldNotBeNull);
+	}
+	
+	/** ******************************** **/
+	/** hasMoreInsiderBuysThanSells End: **/
+	/** ******************************** **/
 
 }

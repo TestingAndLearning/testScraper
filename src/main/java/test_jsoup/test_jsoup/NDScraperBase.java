@@ -95,9 +95,9 @@ public class NDScraperBase {
 	public Long getParsedAlphaNumericMoney(String money) {
 		int decimalSpaces = 0;
 		
-		if (!money.contains("M") && !money.contains("B"))
+		if (!money.contains("M") && !money.contains("B") && !money.contains(","))
 		{
-			System.out.println("No M or B detected, invalid input for money. ");
+			System.out.println("No M or B detected, invalid input for money. " + money + ")");
 			return null;
 		}
 		
@@ -119,7 +119,8 @@ public class NDScraperBase {
 			
 		} else {
 			System.out.println("Money already numeric. ");
-			return Long.parseLong(money);
+			String parsedMoney = money.replaceAll(",", "");
+			return Long.parseLong(parsedMoney);	//Sometimes value will be 170,000, need to replace comma. 
 		}
 		//String numericMoney = zeroAppender.toString().replace("B", "").replace("B", "").replace(".", "");
 		String numericMoney = zeroAppender.toString().replaceAll("[BM.()]", "");

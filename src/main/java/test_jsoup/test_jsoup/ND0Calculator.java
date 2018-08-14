@@ -8,11 +8,11 @@ import java.util.Set;
 
 public class ND0Calculator {
 				String tickerSymbol;
-				ND4AnalystRecommendation webScraper;
+				ND11Insider webScraper;
 				
 				public ND0Calculator(String tickerSymbol) throws IOException, InterruptedException{
 					this.tickerSymbol = tickerSymbol;
-					webScraper = new ND4AnalystRecommendation(tickerSymbol);
+					webScraper = new ND11Insider(tickerSymbol);
 				}
 				
 				/** **************** **/
@@ -255,4 +255,23 @@ public class ND0Calculator {
 				/** ***************************** **/
 				/** End: 4 Analyst Recommendation **/
 				/** ***************************** **/
+				
+				/** ************************** **/
+				/** Start: 11 Insider Activity **/
+				/** ************************** **/
+				
+				public Boolean hasMoreInsiderBuysThanSells() {
+					int sharesPurchased = webScraper.getSharesPurchasedInLastThreeMonths();
+					int sharesSold = webScraper.getSharesSoldInLastThreeMonths();
+					if (sharesPurchased > sharesSold) {
+						return true;
+					} else if (sharesSold > sharesPurchased) {
+						return false; 
+					}
+					return null;
+				}
+				
+				/** ************************ **/
+				/** End: 11 Insider Activity **/
+				/** ************************ **/
 }
