@@ -34,7 +34,7 @@ public class ND3ROE extends ND2EPS {
 	//Gets the EPS values by index, 0 would be oldest period (2013 for years) and 4 would be latest period (2017 for years) at the current year of 2018. The scraper content is an HTML table. 
 	public String getNetIncomePeriodValue(Document document, int index) throws InterruptedException {
 		Element netIncomeNode = document.getElementsByClass("crDataTable").get(1).select("tbody > tr.totalRow").get(0).select("td.valueCell").get(index);
-		String netIncomeValue = netIncomeNode.text().replaceAll("[()]", ""); //Sometimes values will have brackets like "(0.08)". 
+		String netIncomeValue = netIncomeNode.text().replaceAll("[)]", "").replaceAll("[(]", "-"); //Sometimes values will have brackets like "(0.08)". 
 		return netIncomeValue;
 	}
 	/** Total Net Income End. **/
@@ -50,7 +50,7 @@ public class ND3ROE extends ND2EPS {
 	//Gets the EPS values by index, 0 would be oldest period (2013 for years) and 4 would be latest period (2017 for years) at the current year of 2018. The scraper content is an HTML table. 
 	public String getShareHolderEquityPeriodValue(Document document, int index) throws InterruptedException {
 		Element shareHolderEquityNode = document.getElementsByClass("crDataTable").get(2).select("tbody > tr.partialSum").get(1).select("td.valueCell").get(index);
-		String shareHolderEquityValue = shareHolderEquityNode.text().replaceAll("[()]", ""); //Sometimes values will have brackets like "(0.08)". 
+		String shareHolderEquityValue = shareHolderEquityNode.text().replaceAll("[)]", "").replaceAll("[(]", "-"); //Sometimes values will have brackets like "(0.08)". 
 		return shareHolderEquityValue;
 	}
 	/** Total Shareholder's Equity End. **/
@@ -72,7 +72,7 @@ public class ND3ROE extends ND2EPS {
 			}
 			
 			//If all fields are available, divide Net Income by Share Holder Equity to get Return On Equity ratio. Then multiple by 100 and use only 4 digits to get the percent. Output should be something like 23.45. 
-			if (netIncomeValue.matches("\\d.*") && shareHolderEquityValue.matches("\\d.*") && !netIncomeYearValue.isEmpty()) {
+			if (netIncomeValue.matches(".*\\d.*") && shareHolderEquityValue.matches(".*\\d.*") && !netIncomeYearValue.isEmpty()) {
 				Double rawNetIncomeValue = (double)getParsedAlphaNumericMoney(netIncomeValue);
 				Double rawShareHolderEquityValue = (double)getParsedAlphaNumericMoney(shareHolderEquityValue);
 				String rawROEValue = Double.toString(rawNetIncomeValue/rawShareHolderEquityValue*100);
@@ -109,7 +109,7 @@ public class ND3ROE extends ND2EPS {
 			}
 			
 			//Converts the quarter end date from "30-Sep-2016" to "2016-Q3"
-			if (netIncomeValue.matches("\\d.*") && shareHolderEquityValue.matches("\\d.*") && !netIncomeQuarterValue.isEmpty()) {
+			if (netIncomeValue.matches(".*\\d.*") && shareHolderEquityValue.matches(".*\\d.*") && !netIncomeQuarterValue.isEmpty()) {
 				String month = netIncomeQuarterValue.split("-")[1];
 				String year = netIncomeQuarterValue.split("-")[2];
 				StringBuilder parsedQuarterValueBuilder = new StringBuilder();
@@ -132,7 +132,7 @@ public class ND3ROE extends ND2EPS {
 				String parsedQuarterValue = parsedQuarterValueBuilder.toString();
 				
 				//If all fields are available, divide Net Income by Share Holder Equity to get Return On Equity ratio. Then multiple by 100 and use only 4 digits to get the percent. Output should be something like 23.45. 
-				if (netIncomeValue.matches("\\d.*") && shareHolderEquityValue.matches("\\d.*") && !netIncomeQuarterValue.isEmpty()) {
+				if (netIncomeValue.matches(".*\\d.*") && shareHolderEquityValue.matches(".*\\d.*") && !netIncomeQuarterValue.isEmpty()) {
 					Double rawNetIncomeValue = (double)getParsedAlphaNumericMoney(netIncomeValue);
 					Double rawShareHolderEquityValue = (double)getParsedAlphaNumericMoney(shareHolderEquityValue);
 					String rawROEValue = Double.toString(rawNetIncomeValue/rawShareHolderEquityValue*100);

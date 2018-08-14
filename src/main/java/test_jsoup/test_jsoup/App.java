@@ -41,7 +41,7 @@ public class App {
 		//System.out.println(nd11.getSharesPurchasedInLastThreeMonths());
 		//System.out.println(nd11.getSharesSoldInLastThreeMonths());
     	
-    	ND0Calculator ndCalc = new ND0Calculator("ROKU");
+    	ND0Calculator ndCalc = new ND0Calculator("SNAP");
     	System.out.println("1A. Has Increasing Revenue For Past Year: " + ndCalc.hasIncreasingRevenue(Period.YEAR));
     	System.out.println("1B. Has Increasing Revenue For Past Quarter: " + ndCalc.hasIncreasingRevenue(Period.QUARTER));
     	

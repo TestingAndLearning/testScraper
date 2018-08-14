@@ -123,7 +123,7 @@ public class NDScraperBase {
 			return Long.parseLong(parsedMoney);	//Sometimes value will be 170,000, need to replace comma. 
 		}
 		//String numericMoney = zeroAppender.toString().replace("B", "").replace("B", "").replace(".", "");
-		String numericMoney = zeroAppender.toString().replaceAll("[BM.()]", "");
+		String numericMoney = zeroAppender.toString().replaceAll("[BM.)]", "").replaceAll("[(]", "-");
 		long parsedAlphaNumericMoney = Long.parseLong(numericMoney);
 		return parsedAlphaNumericMoney;
 	}
