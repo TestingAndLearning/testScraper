@@ -123,7 +123,7 @@ public class ND3ROETest {
 				System.out.println("Key pattern: \"" + k + "\" does not match pattern for Year \"\\d{4}[-][A-Z][\\d]\"");
 				matchesPattern = false;
 			}
-			if (!roeByQuarters.get(k).matches("\\d.*")) {
+			if (!roeByQuarters.get(k).matches(".*\\d.*")) {
 				System.out.print("testGetROEByQuarters: ");
 				System.out.println("Key: " + "\"" + k + "\" value's pattern: \"" + roeByQuarters.get(k) + "\" does not match pattern for ROE \"\\d.*\"");
 				matchesPattern = false;

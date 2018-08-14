@@ -91,7 +91,7 @@ public class ND2EPSTest {
 				System.out.println("Key pattern: \"" + k + "\" does not match pattern for Year \"\\d{4}[-][A-Z][\\d]\"");
 				matchesPattern = false;
 			}
-			if (!epsByQuarters.get(k).matches("\\d.*")) {
+			if (!epsByQuarters.get(k).matches(".*\\d.*")) {
 				System.out.print("testGetEPSByQuarters: ");
 				System.out.println("Key: " + "\"" + k + "\" value's pattern: \"" + epsByQuarters.get(k) + "\" does not match pattern for EPS \"\\d.*\"");
 				matchesPattern = false;
