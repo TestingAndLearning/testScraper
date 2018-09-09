@@ -14,6 +14,7 @@ import org.junit.Test;
     ND2EPSTest.class,
     ND3ROETest.class,
     ND4AnalystRecommendationTest.class,
+    ND9IndustryTest.class,
     ND11InsiderTest.class
 })
 

@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 
-public class ND11Insider extends ND4AnalystRecommendation {
+public class ND11Insider extends ND9Industry {
 
 	public ND11Insider(String tickerSymbol) throws IOException, InterruptedException {
 		super(tickerSymbol);

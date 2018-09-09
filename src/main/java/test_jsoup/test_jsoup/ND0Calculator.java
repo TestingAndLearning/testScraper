@@ -256,6 +256,22 @@ public class ND0Calculator {
 				/** End: 4 Analyst Recommendation **/
 				/** ***************************** **/
 				
+				/** ***************** **/
+				/** Start: 9 Industry **/
+				/** ***************** **/
+				
+				public String getIndustry() throws InterruptedException {
+					return webScraper.getIndustry();
+				}
+				
+				public String getSector() throws InterruptedException {
+					return webScraper.getSector();
+				}
+				
+				/** *************** **/
+				/** End: 9 Industry **/
+				/** *************** **/
+				
 				/** ************************** **/
 				/** Start: 11 Insider Activity **/
 				/** ************************** **/

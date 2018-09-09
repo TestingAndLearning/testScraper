@@ -41,7 +41,8 @@ public class App {
 		//System.out.println(nd11.getSharesPurchasedInLastThreeMonths());
 		//System.out.println(nd11.getSharesSoldInLastThreeMonths());
     	
-    	ND0Calculator ndCalc = new ND0Calculator("SNAP");
+
+    	ND0Calculator ndCalc = new ND0Calculator("MSFT");
     	System.out.println("1A. Has Increasing Revenue For Past Year: " + ndCalc.hasIncreasingRevenue(Period.YEAR));
     	System.out.println("1B. Has Increasing Revenue For Past Quarter: " + ndCalc.hasIncreasingRevenue(Period.QUARTER));
     	
@@ -53,5 +54,12 @@ public class App {
     	
     	System.out.println("4A. Analysts Recommend: " + ndCalc.analystRecommendationIsPositive() + " (" + ndCalc.getAnalystRecommendation() + ")");
     	System.out.println("5A. Has More Buys Than Sells: " + ndCalc.hasMoreInsiderBuysThanSells());
+    	
+    	System.out.println("6A. Is in industry: " + ndCalc.getIndustry());
+    	System.out.println("6B. Is in sector: " + ndCalc.getSector());
+
+    	//ND0Calculator ndCalc = new ND0Calculator("CMG");
+    	//System.out.println(ndCalc.industry());
+    	//System.out.println(ndCalc.sector());
     }
 }
