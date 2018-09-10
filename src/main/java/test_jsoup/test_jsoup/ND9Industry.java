@@ -12,7 +12,6 @@ public class ND9Industry extends ND4AnalystRecommendation
 	public ND9Industry(String tickerSymbol) throws IOException, InterruptedException
 	{
 		super(tickerSymbol);
-		profileDocument = Jsoup.connect(profileUrl).get();
 	}
 	
 	/** **************************** **/
@@ -35,5 +34,4 @@ public class ND9Industry extends ND4AnalystRecommendation
 	/** ************************** **/
 	/** ND #9 Industry Section END **/
 	/** ************************** **/
-
 }

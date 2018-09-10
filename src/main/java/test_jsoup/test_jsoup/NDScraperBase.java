@@ -83,6 +83,20 @@ public class NDScraperBase {
 		return elementValue;
 	}
 	
+	//Get current P/E Ratio from profile page. 
+	public String getPERatio() throws InterruptedException {
+		Element industryNode = profileDocument.select("div.block.threewide.addgutter").get(0).select("div.section").get(0).select("p").get(1);
+		String industry = industryNode.text();
+		return industry;
+	}
+	
+	//Gets current volume from profile page. 
+	public String getVolume() throws InterruptedException {
+		Element industryNode = profileDocument.select("div.section.activeQuote.bgQuote.down").get(0).select("div").get(5).select("p").get(3).select("span").get(1);
+		String industry = industryNode.text();
+		return industry;
+	}
+	
 	/** ******** **/
 	/** 000A_End **/
 	/** ******** **/
@@ -98,6 +112,7 @@ public class NDScraperBase {
 		if (!money.contains("M") && !money.contains("B") && !money.contains(","))
 		{
 			System.out.println("No M or B detected, invalid input for money. " + money + ")");
+			//If still number, just return the number. 
 			return null;
 		}
 		
@@ -210,5 +225,4 @@ public class NDScraperBase {
 	/** ******** **/
 	/** 000B_End **/
 	/** ******** **/
-
 }

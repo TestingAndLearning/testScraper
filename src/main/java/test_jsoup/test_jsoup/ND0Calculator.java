@@ -15,6 +15,26 @@ public class ND0Calculator {
 					webScraper = new ND11Insider(tickerSymbol);
 				}
 				
+				/** *************** **/
+				/** Start: 0 Basics **/
+				/** *************** **/
+				
+				public String getCurrentPrice() throws IOException {
+					return webScraper.getCurrentPrice();
+				}
+				
+				public String getPERatio() throws InterruptedException {
+					return webScraper.getPERatio();
+				}
+				
+				public String getVolume() throws InterruptedException {
+					return webScraper.getVolume();
+				}
+				
+				/** ************ **/
+				/** END: 0 Basic **/
+				/** ************ **/
+				
 				/** **************** **/
 				/** Start: 1 Revenue **/
 				/** **************** **/
