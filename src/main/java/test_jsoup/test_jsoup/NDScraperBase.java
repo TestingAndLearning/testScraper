@@ -77,22 +77,41 @@ public class NDScraperBase {
 	/** ****************************************************************** **/
 	
 	//Gets current stock price at the main page. 
-	public String getCurrentPrice() throws IOException {
-		Element stockPriceElement = profileDocument.getElementsByClass("pricewrap").get(0).getElementsByClass("data").get(0);
+	public String getCurrentPrice() throws IOException, IndexOutOfBoundsException {
+		Element stockPriceElement;
+		try {
+			stockPriceElement = profileDocument.getElementsByClass("pricewrap").get(0).getElementsByClass("data").get(0);
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println(tickerSymbol + ": Could not getCurrentPrice(), node not found. ");
+			return null;
+		}
 		String elementValue = stockPriceElement.text();
 		return elementValue;
 	}
 	
 	//Get current P/E Ratio from profile page. 
-	public String getPERatio() throws InterruptedException {
-		Element industryNode = profileDocument.select("div.block.threewide.addgutter").get(0).select("div.section").get(0).select("p").get(1);
+	public String getPERatio() throws InterruptedException, IndexOutOfBoundsException {
+		Element industryNode;
+		try {
+			industryNode = profileDocument.select("div.block.threewide.addgutter").get(0).select("div.section").get(0).select("p").get(1);
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println(tickerSymbol + ": Could not getPERatio(), node not found. ");
+			return null;
+		}
 		String industry = industryNode.text();
 		return industry;
 	}
 	
 	//Gets current volume from profile page. Can be (without quotes) "85" "8,530" "1.2M" "2.4B"
-	public String getVolume() throws InterruptedException {
-		Element volumeNode = profileDocument.select("div.section.activeQuote.bgQuote").get(0).select("div").get(5).select("p").get(3).select("span").get(1);
+	public String getVolume() throws InterruptedException, IndexOutOfBoundsException {
+		Element volumeNode;
+		try {
+			volumeNode = profileDocument.select("div.section.activeQuote.bgQuote").get(0).select("div").get(5).select("p").get(3).select("span").get(1);
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println(tickerSymbol + ": Could not getVolume(), node not found. ");
+			return null;
+		}
+		
 		String volume = volumeNode.text();
 		
 		if (volume.contains("m") || volume.contains("b")) {

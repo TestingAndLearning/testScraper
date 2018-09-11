@@ -25,15 +25,27 @@ public class ND3ROE extends ND2EPS {
 	
 	/** Total Net Income Start. **/
 	//The period can be Years or Quarters. Years would be in the format "2013", Quarters would be in the format "30-Sep-2016"
-	public String getNetIncomePeriodHeader(Document document, int index) throws InterruptedException {
-		Element yearNode = document.getElementsByClass("crDataTable").get(1).select("th[scope]").get(index);
+	public String getNetIncomePeriodHeader(Document document, int index) throws InterruptedException, IndexOutOfBoundsException {
+		Element yearNode; 
+		try {
+			yearNode = document.getElementsByClass("crDataTable").get(1).select("th[scope]").get(index);
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println(tickerSymbol + ": Could not getNetIncomePeriodHeader(document, " + index + "), node not found. ");
+			return null;
+		}
 		String netIncomeYear = yearNode.text();
 		return netIncomeYear;
 	}
 	
 	//Gets the EPS values by index, 0 would be oldest period (2013 for years) and 4 would be latest period (2017 for years) at the current year of 2018. The scraper content is an HTML table. 
-	public String getNetIncomePeriodValue(Document document, int index) throws InterruptedException {
-		Element netIncomeNode = document.getElementsByClass("crDataTable").get(1).select("tbody > tr.totalRow").get(0).select("td.valueCell").get(index);
+	public String getNetIncomePeriodValue(Document document, int index) throws InterruptedException, IndexOutOfBoundsException {
+		Element netIncomeNode;
+		try {
+			netIncomeNode = document.getElementsByClass("crDataTable").get(1).select("tbody > tr.totalRow").get(0).select("td.valueCell").get(index);
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println(tickerSymbol + ": Could not getNetIncomePeriodValue(document, " + index + "), node not found. ");
+			return null;
+		}
 		String netIncomeValue = netIncomeNode.text().replaceAll("[)]", "").replaceAll("[(]", "-"); //Sometimes values will have brackets like "(0.08)". 
 		return netIncomeValue;
 	}
@@ -41,15 +53,27 @@ public class ND3ROE extends ND2EPS {
 	
 	/** Total Shareholder's Equity Start. **/
 	//The period can be Years or Quarters. Years would be in the format "2013", Quarters would be in the format "30-Sep-2016"
-	public String getShareHolderEquityPeriodHeader(Document document, int index) throws InterruptedException {
-		Element yearNode = document.getElementsByClass("crDataTable").get(2).select("th[scope]").get(index);
+	public String getShareHolderEquityPeriodHeader(Document document, int index) throws InterruptedException, IndexOutOfBoundsException {
+		Element yearNode;
+		try { 
+			yearNode = document.getElementsByClass("crDataTable").get(2).select("th[scope]").get(index);
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println(tickerSymbol + ": Could not getShareHolderEquityPeriodHeader(document, " + index + "), node not found. ");
+			return null;
+		}
 		String shareHolderEquityYear = yearNode.text();
 		return shareHolderEquityYear;
 	}
 	
 	//Gets the EPS values by index, 0 would be oldest period (2013 for years) and 4 would be latest period (2017 for years) at the current year of 2018. The scraper content is an HTML table. 
-	public String getShareHolderEquityPeriodValue(Document document, int index) throws InterruptedException {
-		Element shareHolderEquityNode = document.getElementsByClass("crDataTable").get(2).select("tbody > tr.partialSum").get(1).select("td.valueCell").get(index);
+	public String getShareHolderEquityPeriodValue(Document document, int index) throws InterruptedException, IndexOutOfBoundsException {
+		Element shareHolderEquityNode;
+		try {
+			shareHolderEquityNode = document.getElementsByClass("crDataTable").get(2).select("tbody > tr.partialSum").get(1).select("td.valueCell").get(index);
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println(tickerSymbol + ": Could not getShareHolderEquityPeriodValue(document, " + index + "), node not found. ");
+			return null;
+		}
 		String shareHolderEquityValue = shareHolderEquityNode.text().replaceAll("[)]", "").replaceAll("[(]", "-"); //Sometimes values will have brackets like "(0.08)". 
 		return shareHolderEquityValue;
 	}

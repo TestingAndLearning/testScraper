@@ -24,15 +24,27 @@ public class ND1Revenue extends NDScraperBase
 	/** *************************** **/
 	
 	//The period can be Years or Quarters. Years would be in the format "2013", Quarters would be in the format "30-Sep-2016"
-	public String getRevenuePeriodHeader(Document document, int index) throws InterruptedException {
-		Element yearNode = document.getElementsByClass("crDataTable").get(0).select("th[scope]").get(index);
+	public String getRevenuePeriodHeader(Document document, int index) throws InterruptedException, IndexOutOfBoundsException {
+		Element yearNode;
+		try {
+			yearNode = document.getElementsByClass("crDataTable").get(0).select("th[scope]").get(index);
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println(tickerSymbol + ": Could not getRevenuePeriodHeader(document, " + index + "), node not found. ");
+			return null;
+		}
 		String revenueYear = yearNode.text();
 		return revenueYear;
 	}
 	
 	//Gets the revenue values by index, 0 would be oldest period (2013 for years) and 4 would be latest period (2017 for years) at the current year of 2018. The scraper content is an HTML table. 
-	public String getRevenuePeriodValue(Document document, int index) throws InterruptedException {
-		Element revenueNode = document.getElementsByClass("partialSum").get(0).select("td.valueCell").get(index);
+	public String getRevenuePeriodValue(Document document, int index) throws InterruptedException, IndexOutOfBoundsException {
+		Element revenueNode;
+		try {
+			revenueNode = document.getElementsByClass("partialSum").get(0).select("td.valueCell").get(index);
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println(tickerSymbol + ": Could not getRevenuePeriodValue(document, " + index + "), node not found. ");
+			return null;
+		}
 		String revenueValue = revenueNode.text().replaceAll("[)]", "").replaceAll("[(]", "-");
 		return revenueValue;
 	}

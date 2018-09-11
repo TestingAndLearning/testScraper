@@ -264,9 +264,9 @@ public class ND0Calculator {
 				
 				public Boolean analystRecommendationIsPositive() {
 					String analystRecommendation = getAnalystRecommendation();
-					if (analystRecommendation.equals("BUY") || analystRecommendation.equals("OVER")) {
+					if (analystRecommendation.equals("BUY") || analystRecommendation.equals("OVER") || analystRecommendation.equals("OVERWEIGHT")) {
 						return true;
-					} else if (analystRecommendation.equals("SELL") || analystRecommendation.equals("UNDER") || analystRecommendation.equals("HOLD")) {
+					} else if (analystRecommendation.equals("SELL") || analystRecommendation.equals("UNDER") || analystRecommendation.equals("UNDERWEIGHT") || analystRecommendation.equals("HOLD")) {
 						return false;
 					}
 					return null;
@@ -297,12 +297,15 @@ public class ND0Calculator {
 				/** ************************** **/
 				
 				public Boolean hasMoreInsiderBuysThanSells() {
-					int sharesPurchased = webScraper.getSharesPurchasedInLastThreeMonths();
-					int sharesSold = webScraper.getSharesSoldInLastThreeMonths();
-					if (sharesPurchased > sharesSold) {
-						return true;
-					} else if (sharesSold > sharesPurchased) {
-						return false; 
+					Integer sharesPurchased = webScraper.getSharesPurchasedInLastThreeMonths();
+					Integer sharesSold = webScraper.getSharesSoldInLastThreeMonths();
+					
+					if (sharesPurchased != null && sharesSold != null) {
+						if (sharesPurchased > sharesSold) {
+							return true;
+						} else if (sharesSold > sharesPurchased) {
+							return false; 
+						}
 					}
 					return null;
 				}

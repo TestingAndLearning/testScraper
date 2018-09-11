@@ -19,15 +19,27 @@ public class ND2EPS extends ND1Revenue {
 	/** *********************** **/
 	
 	//The period can be Years or Quarters. Years would be in the format "2013", Quarters would be in the format "30-Sep-2016"
-	public String getEPSPeriodHeader(Document document, int index) throws InterruptedException {
-		Element yearNode = document.getElementsByClass("crDataTable").get(1).select("th[scope]").get(index);
+	public String getEPSPeriodHeader(Document document, int index) throws InterruptedException, IndexOutOfBoundsException {
+		Element yearNode;
+		try {
+			yearNode = document.getElementsByClass("crDataTable").get(1).select("th[scope]").get(index);
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println(tickerSymbol + ": Could not getEPSPeriodHeader(document, " + index + "), node not found. ");
+			return null;
+		}
 		String epsYear = yearNode.text();
 		return epsYear;
 	}
 	
 	//Gets the EPS values by index, 0 would be oldest period (2013 for years) and 4 would be latest period (2017 for years) at the current year of 2018. The scraper content is an HTML table. 
-	public String getEPSPeriodValue(Document document, int index) throws InterruptedException {
-		Element epsNode = document.getElementsByClass("crDataTable").get(1).select("tbody > tr.mainRow").get(15).select("td.valueCell").get(index);
+	public String getEPSPeriodValue(Document document, int index) throws InterruptedException, IndexOutOfBoundsException {
+		Element epsNode;
+		try {
+			epsNode = document.getElementsByClass("crDataTable").get(1).select("tbody > tr.mainRow").get(15).select("td.valueCell").get(index);
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println(tickerSymbol + ": Could not getEPSPeriodValue(document, " + index + "), node not found. ");
+			return null;
+		}
 		String epsValue = epsNode.text().replaceAll("[)]", "").replaceAll("[(]", "-");//Sometimes values will have brackets like "(0.08)", indicating negative numbers. 
 		return epsValue;
 	}
