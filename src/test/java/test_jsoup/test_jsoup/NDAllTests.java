@@ -6,6 +6,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+//Can test with MSFT, SQ, SNAP, SONOS, HUBB, LCNB
+
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
 	NDScraperBaseTest.class,

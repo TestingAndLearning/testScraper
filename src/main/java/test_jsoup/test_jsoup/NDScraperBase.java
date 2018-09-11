@@ -90,11 +90,16 @@ public class NDScraperBase {
 		return industry;
 	}
 	
-	//Gets current volume from profile page. 
+	//Gets current volume from profile page. Can be (without quotes) "85" "8,530" "1.2M" "2.4B"
 	public String getVolume() throws InterruptedException {
-		Element industryNode = profileDocument.select("div.section.activeQuote.bgQuote.down").get(0).select("div").get(5).select("p").get(3).select("span").get(1);
-		String industry = industryNode.text();
-		return industry;
+		Element volumeNode = profileDocument.select("div.section.activeQuote.bgQuote").get(0).select("div").get(5).select("p").get(3).select("span").get(1);
+		String volume = volumeNode.text();
+		
+		if (volume.contains("m") || volume.contains("b")) {
+			volume = getParsedAlphaNumericMoney(volume.toUpperCase()).toString();
+		}
+		
+		return volume.replace(",","");
 	}
 	
 	/** ******** **/

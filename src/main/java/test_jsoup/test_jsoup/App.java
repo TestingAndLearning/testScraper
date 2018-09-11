@@ -42,7 +42,7 @@ public class App {
 		//System.out.println(nd11.getSharesSoldInLastThreeMonths());
     	
     	String symbol = "MSFT";
-    	ND0Calculator ndCalc = new ND0Calculator("MSFT");
+    	ND0Calculator ndCalc = new ND0Calculator(symbol);
     	System.out.println("Ticker: " + symbol + "\t Current Price: " + ndCalc.getCurrentPrice() + "\t PE: " + ndCalc.getPERatio() + "\t Volume: " + ndCalc.getVolume());
     	
     	System.out.println("1A. Has Increasing Revenue For Past Year: " + ndCalc.hasIncreasingRevenue(Period.YEAR));
@@ -59,6 +59,7 @@ public class App {
     	
     	System.out.println("6A. Is in industry: " + ndCalc.getIndustry());
     	System.out.println("6B. Is in sector: " + ndCalc.getSector());
+    	
 
     	//ND0Calculator ndCalc = new ND0Calculator("CMG");
     	//System.out.println(ndCalc.industry());

@@ -12,7 +12,7 @@ import org.junit.Test;
 import junit.framework.TestCase;
 
 public class NDScraperBaseTest extends TestCase {
-	String tickerSymbol = "MSFT";
+	String tickerSymbol = "HUBB";
 	String mainUrl;
 	String incomeUrl;
 	String incomeQuarterUrl;
@@ -45,6 +45,22 @@ public class NDScraperBaseTest extends TestCase {
 		float floatValue;
 		floatValue = Float.parseFloat(webScraper.getCurrentPrice());
 		assertNotNull(floatValue);
+	}
+	
+	@Test
+	public void testGetPERatio_isFloat() throws NumberFormatException, IOException, InterruptedException {
+		System.out.println("PE Ratio For " + tickerSymbol +" Is: "+ webScraper.getPERatio());
+		float floatValue;
+		floatValue = Float.parseFloat(webScraper.getPERatio());
+		assertNotNull(floatValue);
+	}
+	
+	@Test
+	public void testGetVolume_isNumber() throws NumberFormatException, IOException, InterruptedException {
+		System.out.println("Volume For " + tickerSymbol +" Is: "+ webScraper.getVolume());
+		Long longValue;
+		longValue = Long.parseLong(webScraper.getVolume());
+		assertNotNull(longValue);
 	}
 	
 	/** ********************************* **/
