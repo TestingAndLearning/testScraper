@@ -49,7 +49,7 @@ public class NDScraperBaseTest extends TestCase {
 	
 	@Test
 	public void testGetPERatio_isFloat() throws NumberFormatException, IOException, InterruptedException {
-		System.out.println("PE Ratio For " + tickerSymbol +" Is: "+ webScraper.getPERatio());
+		//System.out.println("PE Ratio For " + tickerSymbol +" Is: "+ webScraper.getPERatio());
 		float floatValue;
 		floatValue = Float.parseFloat(webScraper.getPERatio());
 		assertNotNull(floatValue);
@@ -57,7 +57,7 @@ public class NDScraperBaseTest extends TestCase {
 	
 	@Test
 	public void testGetVolume_isNumber() throws NumberFormatException, IOException, InterruptedException {
-		System.out.println("Volume For " + tickerSymbol +" Is: "+ webScraper.getVolume());
+		//System.out.println("Volume For " + tickerSymbol +" Is: "+ webScraper.getVolume());
 		Long longValue;
 		longValue = Long.parseLong(webScraper.getVolume());
 		assertNotNull(longValue);
