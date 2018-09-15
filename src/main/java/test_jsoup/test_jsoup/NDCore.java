@@ -11,7 +11,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class NDScraperBase {
+public class NDCore {
 	
 	/** ************************** **/
 	/** Begin Initializing Scraper **/
@@ -46,7 +46,7 @@ public class NDScraperBase {
 	Document cashflowQuarterDocument;
 
 	
-	public NDScraperBase(String tickerSymbol) throws IOException, InterruptedException {
+	public NDCore(String tickerSymbol) throws IOException, InterruptedException {
 		this.tickerSymbol = tickerSymbol;
 		mainUrl = "https://www.marketwatch.com/investing/stock/" + tickerSymbol;
 		analystUrl = mainUrl + "/analystestimates";

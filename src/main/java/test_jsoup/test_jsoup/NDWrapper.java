@@ -6,11 +6,11 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class ND0Calculator {
+public class NDWrapper {
 				String tickerSymbol;
 				ND11Insider webScraper;
 				
-				public ND0Calculator(String tickerSymbol) throws IOException, InterruptedException{
+				public NDWrapper(String tickerSymbol) throws IOException, InterruptedException{
 					this.tickerSymbol = tickerSymbol;
 					webScraper = new ND11Insider(tickerSymbol);
 				}

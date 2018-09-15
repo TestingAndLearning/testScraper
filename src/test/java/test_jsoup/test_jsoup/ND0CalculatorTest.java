@@ -8,7 +8,7 @@ import org.junit.Test;
 
 public class ND0CalculatorTest {
 	String tickerSymbol = "MSFT";
-	ND0Calculator ndCalc = new ND0Calculator(tickerSymbol);
+	NDWrapper ndCalc = new NDWrapper(tickerSymbol);
 	
 	public ND0CalculatorTest() throws IOException, InterruptedException {
 		

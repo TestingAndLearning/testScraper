@@ -27,7 +27,7 @@ public class NDScraperBaseTest extends TestCase {
 	Document cashflowDocument;
 	Document cashflowQuarterDocument;
 	
-	NDScraperBase webScraper = new NDScraperBase(tickerSymbol);
+	NDCore webScraper = new NDCore(tickerSymbol);
 	int scrapeDelay = 500;
 	
 	public NDScraperBaseTest() throws IOException, InterruptedException {
