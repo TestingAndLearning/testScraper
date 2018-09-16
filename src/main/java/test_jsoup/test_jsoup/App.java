@@ -5,6 +5,8 @@ import java.io.IOException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import test_sql.DBAccess;
+
 /**
  * Hello world!
  *
@@ -41,6 +43,7 @@ public class App {
 		//System.out.println(nd11.getSharesPurchasedInLastThreeMonths());
 		//System.out.println(nd11.getSharesSoldInLastThreeMonths());
     	
+    	/*
     	String symbol = "MSFT";
     	NDWrapper ndCalc = new NDWrapper(symbol);
     	System.out.println("Ticker: " + symbol + "\t Current Price: " + ndCalc.getCurrentPrice() + "\t PE: " + ndCalc.getPERatio() + "\t Volume: " + ndCalc.getVolume());
@@ -59,7 +62,10 @@ public class App {
     	
     	System.out.println("6A. Is in industry: " + ndCalc.getIndustry());
     	System.out.println("6B. Is in sector: " + ndCalc.getSector());
+    	*/
     	
+    	DBAccess db = new DBAccess();
+    	db.createNewDatabase("Test123a");
 
     	//ND0Calculator ndCalc = new ND0Calculator("CMG");
     	//System.out.println(ndCalc.industry());
