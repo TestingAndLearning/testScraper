@@ -64,8 +64,9 @@ public class App {
     	System.out.println("6B. Is in sector: " + ndCalc.getSector());
     	*/
     	
-    	DBAccess db = new DBAccess();
-    	db.createNewDatabase("Test123a");
+    	DBAccess db = new DBAccess("Test123a");
+    	db.createNewDatabase();
+    	db.createTodaysTable();
 
     	//ND0Calculator ndCalc = new ND0Calculator("CMG");
     	//System.out.println(ndCalc.industry());
