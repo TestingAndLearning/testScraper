@@ -6,11 +6,11 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-public class ND0CalculatorTest {
+public class NDWrapperTest {
 	String tickerSymbol = "MSFT";
 	NDWrapper ndCalc = new NDWrapper(tickerSymbol);
 	
-	public ND0CalculatorTest() throws IOException, InterruptedException {
+	public NDWrapperTest() throws IOException, InterruptedException {
 		
 	}
 

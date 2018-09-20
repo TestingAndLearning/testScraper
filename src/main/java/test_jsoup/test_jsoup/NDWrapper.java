@@ -31,6 +31,16 @@ public class NDWrapper {
 					return webScraper.getVolume();
 				}
 				
+				public Boolean hasPositiveLatestIncome() {
+					String latestIncomeValue = webScraper.getLatestIncomeValue();
+					if (latestIncomeValue.matches("\\d.*")) {
+						return true;
+					} else if (latestIncomeValue.matches("^[-].*")) {
+						return false; 
+					}
+					return null;
+				}
+				
 				/** ************ **/
 				/** END: 0 Basic **/
 				/** ************ **/

@@ -1,5 +1,7 @@
 package test_jsoup.test_jsoup;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -11,8 +13,8 @@ import org.junit.Test;
 
 import junit.framework.TestCase;
 
-public class NDScraperBaseTest extends TestCase {
-	String tickerSymbol = "HUBB";
+public class NDCoreTest extends TestCase {
+	String tickerSymbol = "SNAP";
 	String mainUrl;
 	String incomeUrl;
 	String incomeQuarterUrl;
@@ -30,7 +32,7 @@ public class NDScraperBaseTest extends TestCase {
 	NDCore webScraper = new NDCore(tickerSymbol);
 	int scrapeDelay = 500;
 	
-	public NDScraperBaseTest() throws IOException, InterruptedException {
+	public NDCoreTest() throws IOException, InterruptedException {
 		mainUrl = "https://www.marketwatch.com/investing/stock/" + tickerSymbol;
 		incomeUrl = mainUrl + "/financials";
 		incomeQuarterUrl = incomeUrl+"/income/quarter";
@@ -61,6 +63,18 @@ public class NDScraperBaseTest extends TestCase {
 		Long longValue;
 		longValue = Long.parseLong(webScraper.getVolume());
 		assertNotNull(longValue);
+	}
+	
+	@Test
+	public void testGetLatestIncomeValue_isNumber() {
+		String latestIncomeValue = webScraper.getLatestIncomeValue();
+		String regex = ".*\\d.*";
+		if (!latestIncomeValue.matches(regex)) {
+			System.out.print("testGetLatestIncomeValue_isNumber: ");
+			System.out.println("Value for " + tickerSymbol +" is: "+ latestIncomeValue +" and does not match the regex: " + regex);
+		}
+		System.out.println("Latest Value: " + latestIncomeValue);
+		assertTrue(latestIncomeValue.matches(regex));
 	}
 	
 	/** ********************************* **/

@@ -7,10 +7,6 @@ import org.jsoup.nodes.Document;
 
 import test_sql.DBAccess;
 
-/**
- * Hello world!
- *
- */
 public class App {
 	
     public static void main( String[] args ) throws IOException, InterruptedException
@@ -46,7 +42,7 @@ public class App {
     	/*
     	String symbol = "MSFT";
     	NDWrapper ndCalc = new NDWrapper(symbol);
-    	System.out.println("Ticker: " + symbol + "\t Current Price: " + ndCalc.getCurrentPrice() + "\t PE: " + ndCalc.getPERatio() + "\t Volume: " + ndCalc.getVolume());
+    	System.out.println("Ticker: " + symbol + "\t Current Price: " + ndCalc.getCurrentPrice() + "\t PE: " + ndCalc.getPERatio() + "\t Volume: " + ndCalc.getVolume() + "\t Has Positive Latest Income?: " + ndCalc.hasPositiveLatestIncome());
     	
     	System.out.println("1A. Has Increasing Revenue For Past Year: " + ndCalc.hasIncreasingRevenue(Period.YEAR));
     	System.out.println("1B. Has Increasing Revenue For Past Quarter: " + ndCalc.hasIncreasingRevenue(Period.QUARTER));

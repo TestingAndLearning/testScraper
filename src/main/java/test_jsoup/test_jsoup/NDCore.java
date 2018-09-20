@@ -64,6 +64,7 @@ public class NDCore {
 		
 		mainDocument = Jsoup.connect(mainUrl).get();
 		profileDocument = Jsoup.connect(profileUrl).get();
+		incomeDocument = Jsoup.connect(incomeUrl).get();
 		Thread.sleep(scrapeDelay);
 	}
 	
@@ -119,6 +120,23 @@ public class NDCore {
 		}
 		
 		return volume.replace(",","");
+	}
+	
+	//Gets the income column values from the financial page, then sets the income node to the latest non-empty value each time. This ensures that gaps in financial data are disregarded, and the latest available income value is retrieved. 
+	public String getLatestIncomeValue() {
+			Element latestIncomeNode = null;
+			try {
+				for (int i = 0; i < 5; i++) {
+					if (incomeDocument.getElementsByClass("crDataTable").get(1).select("tbody > tr.totalRow").get(0).select("td.valueCell").get(i).text().replaceAll("[)]", "").replaceAll("[(]", "-") != "") {
+						latestIncomeNode = incomeDocument.getElementsByClass("crDataTable").get(1).select("tbody > tr.totalRow").get(0).select("td.valueCell").get(i);
+					}
+				}
+			} catch (IndexOutOfBoundsException e) {
+				System.out.println(tickerSymbol + ": Could not getLatestIncomeValue, node not found. ");
+				return null;
+			}
+			String latestIncomeValue = latestIncomeNode.text().replaceAll("[)]", "").replaceAll("[(]", "-"); //Sometimes values will have brackets like "(0.08)". 
+			return latestIncomeValue;
 	}
 	
 	/** ******** **/
