@@ -67,6 +67,7 @@ public class App {
     	DBAccess db = new DBAccess("Test123a");
     	db.createNewDatabase();
     	db.createTodaysTable();
+    	db.insert("as", 32);
 
     	//ND0Calculator ndCalc = new ND0Calculator("CMG");
     	//System.out.println(ndCalc.industry());
