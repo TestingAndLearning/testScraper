@@ -46,7 +46,7 @@ public class App {
     	/*
     	String symbol = "MSFT";
     	NDWrapper ndCalc = new NDWrapper(symbol);
-    	System.out.println("Ticker: " + symbol + "\t Current Price: " + ndCalc.getCurrentPrice() + "\t PE: " + ndCalc.getPERatio() + "\t Volume: " + ndCalc.getVolume());
+    	System.out.println("Ticker: " + symbol + "\t Current Price: " + ndCalc.getCurrentPrice() + "\t PE: " + ndCalc.getPERatio() + "\t Volume: " + ndCalc.getVolume() + "\t Has Positive Latest Income?: " + ndCalc.hasPositiveLatestIncome());
     	
     	System.out.println("1A. Has Increasing Revenue For Past Year: " + ndCalc.hasIncreasingRevenue(Period.YEAR));
     	System.out.println("1B. Has Increasing Revenue For Past Quarter: " + ndCalc.hasIncreasingRevenue(Period.QUARTER));
@@ -67,7 +67,7 @@ public class App {
     	DBAccess db = new DBAccess("Test123a");
     	db.createNewDatabase();
     	db.createTodaysTable();
-
+    	
     	//ND0Calculator ndCalc = new ND0Calculator("CMG");
     	//System.out.println(ndCalc.industry());
     	//System.out.println(ndCalc.sector());

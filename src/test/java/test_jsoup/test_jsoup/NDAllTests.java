@@ -10,8 +10,8 @@ import org.junit.Test;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-	NDScraperBaseTest.class,
-    ND0CalculatorTest.class,
+	NDCoreTest.class,
+    NDWrapperTest.class,
     ND1RevenueTest.class,
     ND2EPSTest.class,
     ND3ROETest.class,
