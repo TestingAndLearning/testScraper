@@ -1,6 +1,8 @@
 package test_jsoup.test_jsoup;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -60,9 +62,11 @@ public class App {
     	System.out.println("6B. Is in sector: " + ndCalc.getSector());
     	*/
     	
-    	
+    	/*
     	String symbol = "MSFT";
     	NDWrapper stockCalc = new NDWrapper(symbol);
+    	DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+    	LocalDateTime now = LocalDateTime.now();
     	
     	System.out.println("Ticker: "+ symbol);
     	System.out.println("Price: "+ stockCalc.getCurrentPrice());
@@ -85,14 +89,21 @@ public class App {
     	System.out.println("QuarterEPSIncreasePrecent: "+ stockCalc.epsPercentIncrease(Period.QUARTER));
     	System.out.println("HasIncreasingQuarterROE: "+ stockCalc.hasIncreasingROE(Period.QUARTER));
     	System.out.println("QuarterROEIncreasePrecent: "+ stockCalc.roePercentIncrease(Period.QUARTER));
-    	
+    	System.out.println("DateTime: " + dateTimeFormatter.format(now));
+    	*/
     	
     	/*
+    	DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+    	LocalDateTime todaysDate = LocalDateTime.now();
+    	System.out.println(dateTimeFormatter.format(todaysDate));
+    	*/
+    	
+    	
     	StockDAO db = new StockDAO("Test123a");
     	db.createNewDatabase();
     	db.createTodaysTable();
-    	db.insert("as", 32);
-		*/
+    	//db.insert("as", 32);
+		
 
     	//ND0Calculator ndCalc = new ND0Calculator("CMG");
     	//System.out.println(ndCalc.industry());

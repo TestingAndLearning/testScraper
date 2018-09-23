@@ -7,11 +7,16 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class StockDAO {
 	String fileName;
 	//Connection string. 
 	String url;
+	
+	DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+	LocalDateTime todaysDate = LocalDateTime.now();
 	
 	public StockDAO(String fileName) {
 		this.fileName = fileName;
@@ -52,11 +57,32 @@ public class StockDAO {
     }
 	
     public void createTodaysTable() {   
-        // SQL statement for creating a new table  
-        String sql = "CREATE TABLE IF NOT EXISTS employees (\n"  
+        //SQL statement for creating a new table with today's date. 
+    	String s = "Stocks_" + dateTimeFormatter.format(todaysDate);
+        String sql = "CREATE TABLE IF NOT EXISTS " + s + " (\n"  
                 + " id integer PRIMARY KEY,\n"  
-                + " name text NOT NULL,\n"  
-                + " capacity real\n"  
+                + " Ticker text NOT NULL,\n"  
+                + " Price real,\n" 
+                + " PE real,\n"  
+                + " Volume text,\n" 
+                + " PositiveLatestIncome boolean,\n"  
+                + " HasIncreasingAnnualRevenue boolean,\n" 
+                + " AnnualRevenueIncreasePrecent real,\n"  
+                + " HasIncreasingAnnualEPS boolean,\n"  
+                + " AnnualEPSIncreasePrecent real,\n"  
+                + " HasIncreasingAnnualROE boolean,\n" 
+                + " AnnualROEIncreasePrecent real,\n"  
+                + " AnalystsRecommend boolean,\n"  
+                + " HasMoreInsiderBuys boolean,\n"  
+                + " Industry text,\n"  
+                + " Sector text,\n"  
+                + " HasIncreasingQuarterlyRevenue boolean,\n" 
+                + " QuarterlyRevenueIncreasePrecent real,\n"  
+                + " HasIncreasingQuarterlyEPS boolean,\n"  
+                + " QuarterlyEPSIncreasePrecent real,\n"  
+                + " HasIncreasingQuarterlyROE boolean,\n" 
+                + " QuarterlyROEIncreasePrecent real,\n"  
+                + " DateTime timestamp\n"  
                 + ");";  
           
         try{  
@@ -69,7 +95,9 @@ public class StockDAO {
     }
     
     public void insert(String name, double capacity) {  
-        String sql = "INSERT INTO employees(name, capacity) VALUES(?,?)";  
+        String sql = "INSERT INTO stocks" + dateTimeFormatter.format(todaysDate) + 
+        		"(name, capacity) "
+        		+ "VALUES(?,?)";  
    
         try{  
             Connection conn = this.connect();  
