@@ -98,11 +98,38 @@ public class App {
     	System.out.println(dateTimeFormatter.format(todaysDate));
     	*/
     	
-    	
+    	String symbol = "MSFT";
+    	NDWrapper stockCalc = new NDWrapper(symbol);
     	StockDAO db = new StockDAO("Test123a");
     	db.createNewDatabase();
     	db.createTodaysTable();
-    	//db.insert("as", 32);
+    	
+    	String ticker = "MSFT";
+    	Double price = Double.parseDouble(stockCalc.getCurrentPrice());
+    	Double pe = Double.parseDouble(stockCalc.getPERatio());
+    	String volume = stockCalc.getVolume();
+    	Boolean positiveLatestIncome = stockCalc.hasPositiveLatestIncome();
+    	
+    	Boolean hasIncreasingAnnualRevenue = stockCalc.hasIncreasingRevenue(Period.YEAR);
+    	Double annualRevenueIncreasePrecent = stockCalc.revenuePercentIncrease(Period.YEAR);
+    	Boolean hasIncreasingAnnualEPS = stockCalc.hasIncreasingEPS(Period.YEAR);
+    	Double annualEPSIncreasePrecent = stockCalc.epsPercentIncrease(Period.YEAR);
+    	Boolean hasIncreasingAnnualROE = stockCalc.hasIncreasingROE(Period.YEAR);
+    	Double annualROEIncreasePrecent = stockCalc.roePercentIncrease(Period.YEAR);
+    	
+    	Boolean analystsRecommend = stockCalc.analystRecommendationIsPositive();
+    	Boolean hasMoreInsiderBuys = stockCalc.hasMoreInsiderBuysThanSells();
+    	String industry = stockCalc.getIndustry();
+    	String sector = stockCalc.getSector();
+    	
+    	Boolean hasIncreasingQuarterlyRevenue = stockCalc.hasIncreasingRevenue(Period.YEAR);
+    	Double quarterlyRevenueIncreasePrecent = stockCalc.revenuePercentIncrease(Period.YEAR);
+    	Boolean hasIncreasingQuarterlyEPS = stockCalc.hasIncreasingEPS(Period.YEAR);
+    	Double quarterlyEPSIncreasePrecent = stockCalc.epsPercentIncrease(Period.YEAR);
+    	Boolean hasIncreasingQuarterlyROE = stockCalc.hasIncreasingROE(Period.YEAR);
+    	Double quarterlyROEIncreasePrecent = stockCalc.roePercentIncrease(Period.YEAR);
+    	
+    	db.insert(ticker, price, pe, volume, positiveLatestIncome, hasIncreasingAnnualRevenue, annualRevenueIncreasePrecent, hasIncreasingAnnualEPS, annualEPSIncreasePrecent, hasIncreasingAnnualROE, annualROEIncreasePrecent, analystsRecommend, hasMoreInsiderBuys, industry, sector, hasIncreasingQuarterlyRevenue, quarterlyRevenueIncreasePrecent, hasIncreasingQuarterlyEPS, quarterlyEPSIncreasePrecent, hasIncreasingQuarterlyROE, quarterlyROEIncreasePrecent);
 		
 
     	//ND0Calculator ndCalc = new ND0Calculator("CMG");
