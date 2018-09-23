@@ -8,12 +8,12 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class DBAccess {
+public class StockDAO {
 	String fileName;
 	//Connection string. 
 	String url;
 	
-	public DBAccess(String fileName) {
+	public StockDAO(String fileName) {
 		this.fileName = fileName;
 		url = "jdbc:sqlite:C:/dbs/" + fileName + ".db";
 	}

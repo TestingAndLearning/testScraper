@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
-import test_sql.DBAccess;
+import test_sql.StockDAO;
 
 public class App {
 	
@@ -45,7 +45,7 @@ public class App {
     	System.out.println("Ticker: " + symbol + "\t Current Price: " + ndCalc.getCurrentPrice() + "\t PE: " + ndCalc.getPERatio() + "\t Volume: " + ndCalc.getVolume() + "\t Has Positive Latest Income?: " + ndCalc.hasPositiveLatestIncome());
     	
     	System.out.println("1A. Has Increasing Revenue For Past Year: " + ndCalc.hasIncreasingRevenue(Period.YEAR));
-    	System.out.println("1B. Has Increasing Revenue For Past Quarter: " + ndCalc.hasIncreasingRevenue(Period.QUARTER));
+    	
     	
     	System.out.println("2A. Has Increasing EPS For Past Year: " + ndCalc.hasIncreasingEPS(Period.YEAR));
     	System.out.println("2B. Has Increasing EPS For Past Quarter: " + ndCalc.hasIncreasingEPS(Period.QUARTER));
@@ -60,10 +60,39 @@ public class App {
     	System.out.println("6B. Is in sector: " + ndCalc.getSector());
     	*/
     	
-    	DBAccess db = new DBAccess("Test123a");
+    	
+    	String symbol = "MSFT";
+    	NDWrapper stockCalc = new NDWrapper(symbol);
+    	
+    	System.out.println("Ticker: "+ symbol);
+    	System.out.println("Price: "+ stockCalc.getCurrentPrice());
+    	System.out.println("PE: "+ stockCalc.getPERatio());
+    	System.out.println("Volume: "+ stockCalc.getVolume());
+    	System.out.println("PositiveLatestIncome: "+ stockCalc.hasPositiveLatestIncome());
+    	System.out.println("HasIncreasingAnnualRevenue: "+ stockCalc.hasIncreasingRevenue(Period.YEAR));
+    	System.out.println("AnnualRevenueIncreasePrecent: "+ stockCalc.revenuePercentIncrease(Period.YEAR));
+    	System.out.println("HasIncreasingAnnualEPS: "+ stockCalc.hasIncreasingEPS(Period.YEAR));
+    	System.out.println("AnnualEPSIncreasePrecent: "+ stockCalc.epsPercentIncrease(Period.YEAR));
+    	System.out.println("HasIncreasingAnnualROE: "+ stockCalc.hasIncreasingROE(Period.YEAR));
+    	System.out.println("AnnualROEIncreasePrecent: "+ stockCalc.roePercentIncrease(Period.YEAR));
+    	System.out.println("AnalystsRecommend: "+ stockCalc.getAnalystRecommendation());
+    	System.out.println("HasMoreInsiderBuys: "+ stockCalc.hasMoreInsiderBuysThanSells());
+    	System.out.println("Industry: "+ stockCalc.getIndustry());
+    	System.out.println("Sector: "+ stockCalc.getSector());
+    	System.out.println("HasIncreasingQuarterRevenue: "+ stockCalc.hasIncreasingRevenue(Period.QUARTER));
+    	System.out.println("QuarterRevenueIncreasePrecent: "+ stockCalc.revenuePercentIncrease(Period.QUARTER));
+    	System.out.println("HasIncreasingQuarterEPS: "+ stockCalc.hasIncreasingEPS(Period.QUARTER));
+    	System.out.println("QuarterEPSIncreasePrecent: "+ stockCalc.epsPercentIncrease(Period.QUARTER));
+    	System.out.println("HasIncreasingQuarterROE: "+ stockCalc.hasIncreasingROE(Period.QUARTER));
+    	System.out.println("QuarterROEIncreasePrecent: "+ stockCalc.roePercentIncrease(Period.QUARTER));
+    	
+    	
+    	/*
+    	StockDAO db = new StockDAO("Test123a");
     	db.createNewDatabase();
     	db.createTodaysTable();
     	db.insert("as", 32);
+		*/
 
     	//ND0Calculator ndCalc = new ND0Calculator("CMG");
     	//System.out.println(ndCalc.industry());
